@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<header class="main-header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <img src="images/hephzibah.png" alt="School Logo" height="60">
+        </a>
+    </div>
+</header>
+
+<!-- Top Header -->
+<div class="width-100 top-header">
+    <div class="container">
+        <div class="width-100">
+            <b class="new-list"><i class="fas fa-bullhorn"></i> NEWS :</b>
+            <marquee class="headquote" id="header-news">
+                Hephzibah Vics Montessori Where God Is Delighted
+            </marquee>
+        </div>
+    </div>
+</div>
+
+<!-- Main Navigation -->
+<div class="width-100 header-menu">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"
+                 onerror="this.src='https://via.placeholder.com/200x60/2c3e50/ffffff?text=Hephzibah+Vics+Montessori'"></a>
+        </div>
+
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="main-menu" id="main-menu">
+            <li><a href="/home" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+            <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+            <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+            <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+            <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<div class="width-100 hero">
+    <div class="container">
+        <h1>Welcome to Hephzibah Vics Montessori</h1>
+        <p>Providing quality education and holistic development since 2016. Where young minds grow, learn, and excel in a nurturing environment.</p>
+        <a href="/admission" class="btn btn-primary"><i class="fas fa-user-plus"></i> Apply Now</a>
+        <a href="/about" class="btn"><i class="fas fa-play-circle"></i> Learn More</a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="width-100 padding-50">
+    <div class="container">
+        <!-- Quick Stats -->
+        <div class="width-100 text-center margin-bottom-50">
+            <div class="width-25">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-users" style="font-size: 48px; color: #3498db; margin-bottom: 15px;"></i>
+                        <h3>1500+</h3>
+                        <p>Students Enrolled</p>
+                    </div>
+                </div>
+            </div>
+            <div class="width-25">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-chalkboard-teacher" style="font-size: 48px; color: #2ecc71; margin-bottom: 15px;"></i>
+                        <h3>20+</h3>
+                        <p>Qualified Teachers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="width-25">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-school" style="font-size: 48px; color: #e74c3c; margin-bottom: 15px;"></i>
+                        <h3>10</h3>
+                        <p>Years of Excellence</p>
+                    </div>
+                </div>
+            </div>
+            <div class="width-25">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-trophy" style="font-size: 48px; color: #f39c12; margin-bottom: 15px;"></i>
+                        <h3>200+</h3>
+                        <p>Awards Won</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- Three Column Content -->
+        <div class="width-100 margin-top-50">
+            <div class="width-33">
+                <div class="latest-news card">
+                    <div class="heading-sect">
+                        <h3 class="head-title"><i class="fas fa-newspaper"></i> Latest News</h3>
+                    </div>
+                    <div class="card-body">
+                        <marquee direction="up" height="300" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                            <ul class="latest-news-ul" id="latest-news">
+                                <li>16th Feb 2026 Test Begins</li>
+                                <li>20th Feb 2026 Test Ends</li>
+                                <li>25th Feb 2026 Club Day</li>
+                                <li>26th Feb 2026 Mid Term Break</li>
+                                <li>1st Mar 2026 School Reopens</li>
+                                <li>5th Mar 2026 PTA Meeting</li>
+                                <li>10th Mar 2026 Sports Day</li>
+                                <li>15th Mar 2026 Inter-House Competition</li>
+                            </ul>
+                        </marquee>
+                    </div>
+                </div>
+            </div>
+
+            <div class="width-33">
+                <div class="event-list card">
+                    <div class="heading-sect">
+                        <h3 class="head-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="upcoming-event-list" id="upcoming-events">
+                            <li>
+                                <span class="event-date"><span>16</span><span>Feb</span></span>
+                                <span>Test Begins</span>
+                            </li>
+                            <li>
+                                <span class="event-date"><span>20</span><span>Feb</span></span>
+                                <span>Test Ends</span>
+                            </li>
+                            <li>
+                                <span class="event-date"><span>25</span><span>Feb</span></span>
+                                <span>Club Day</span>
+                            </li>
+                            <li>
+                                <span class="event-date"><span>26</span><span>Feb</span></span>
+                                <span>Mid Term Break</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="width-33">
+                <div class="notice-board card">
+                    <div class="heading-sect">
+                        <h3 class="head-title"><i class="fas fa-bullhorn"></i> Notice Board</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="notice-board-list" id="notice-board">
+                            <li>School gate open 7am</li>
+                            <li>School gate close 8am</li>
+                            <li>Nursery closing time 1pm</li>
+                            <li>Lower Primary closing time 2pm</li>
+                            <li>Upper Primary closing time 2:30pm</li>
+                            <li>Secondary school closing time 3pm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="width-100 margin-top-50">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why Choose Us?</h2>
+            <p>Discover what makes Hephzibah Vics Montessori the preferred choice for quality education</p>
+        </div>
+
+        <div class="width-33">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-brain" style="font-size: 40px; color: #3498db; margin-bottom: 15px;"></i>
+                    <h3 class="card-title">Montessori Method</h3>
+                    <p class="card-text">Child-centered educational approach based on scientific observations of children from birth to adulthood.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="width-33">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-hands-helping" style="font-size: 40px; color: #2ecc71; margin-bottom: 15px;"></i>
+                    <h3 class="card-title">Experienced Faculty</h3>
+                    <p class="card-text">Highly qualified and dedicated teachers who are passionate about nurturing young minds.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="width-33">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-shield-alt" style="font-size: 40px; color: #e74c3c; margin-bottom: 15px;"></i>
+                    <h3 class="card-title">Safe Environment</h3>
+                    <p class="card-text">Secure campus with 24 hours power supply and trained security personnel for student safety.</p>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="width-100 footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 3 Rotimi Street, off Evbuabogun road, Sapele road, Edo state, Nigeria</li>
+                    <li><i class="fas fa-phone"></i> +234 815 557 1047, +234 808 657 0620, +234 703 122 2500</li>
+                    <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Thu: 7:00 AM - 2:30 PM, Fri: 7:00 AM - 1:00 PM</li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="/academics"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                    <li><a href="/admission"><i class="fas fa-chevron-right"></i> Admission</a></li>
+                    <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Important Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/portal"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                    <li><a href="/gallery"><i class="fas fa-chevron-right"></i> Photo Gallery</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Hephzibah Vics Montessori. All Rights Reserved. | Designed with ❤️ for Quality Education</p>
+            <p id="api-status">🔵 Using static content</p>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Simple script that doesn't overwrite your HTML
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded - using HTML content');
+
+        // Update API status
+        document.getElementById('api-status').innerHTML = '✅ Using static content';
+        document.getElementById('api-status').style.color = '#2ecc71';
+    });
+
+    // Add teacher portal link in footer
+    document.addEventListener('DOMContentLoaded', function() {
+        const footer = document.querySelector('.footer-bottom p:first-child');
+        if (footer) {
+            const teacherLink = document.createElement('span');
+            teacherLink.innerHTML = ' | <a href="/teacher-login" style="color: #3498db;">Teacher Portal</a>';
+            footer.appendChild(teacherLink);
+        }
+    });
+</script>
+</body>
+</html>

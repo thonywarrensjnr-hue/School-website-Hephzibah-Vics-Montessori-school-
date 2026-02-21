@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your existing CSS remains exactly the same */
+        .portal-container {
+            display: flex;
+            min-height: 500px;
+            margin: 50px 0;
+        }
+
+        .portal-sidebar {
+            width: 300px;
+            background: var(--primary);
+            color: white;
+            border-radius: 10px 0 0 10px;
+            padding: 30px;
+        }
+
+        .portal-content {
+            flex: 1;
+            background: white;
+            border-radius: 0 10px 10px 0;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .portal-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .portal-nav li {
+            margin-bottom: 10px;
+        }
+
+        .portal-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .portal-nav a:hover, .portal-nav a.active {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .dashboard-card i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .grades-table th, .grades-table td {
+            padding: 12px 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .grades-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .grade-a { color: #2ecc71; font-weight: bold; }
+        .grade-b { color: #3498db; font-weight: bold; }
+        .grade-c { color: #f39c12; font-weight: bold; }
+        .grade-d { color: #e74c3c; font-weight: bold; }
+        .grade-f { color: #c0392b; font-weight: bold; }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-pic i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .profile-details h3 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .section-content {
+            margin-top: 30px;
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .action-btn.view {
+            background: rgba(52,152,219,0.1);
+            color: var(--secondary);
+        }
+
+        .action-btn.edit {
+            background: rgba(241,196,15,0.1);
+            color: #f1c40f;
+        }
+
+        .action-btn.delete {
+            background: rgba(231,76,60,0.1);
+            color: #e74c3c;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .grade-a { background: #d4edda; color: #155724; }
+        .grade-b { background: #cce5ff; color: #004085; }
+        .grade-c { background: #fff3cd; color: #856404; }
+        .grade-d { background: #f8d7da; color: #721c24; }
+        .grade-f { background: #f8d7da; color: #c0392b; }
+
+        .logout-btn {
+            float: right;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 2;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .class-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 2px;
+        }
+
+        .result-input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .result-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .total-highlight {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .stat-box .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .print-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .print-btn:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .portal-container {
+                flex-direction: column;
+            }
+
+            .portal-sidebar {
+                width: 100%;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .portal-content {
+                border-radius: 0 0 10px 10px;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .grades-table {
+                font-size: 12px;
+            }
+
+            .grades-table th, .grades-table td {
+                padding: 8px 4px;
+            }
+
+            .result-input {
+                width: 45px;
+                padding: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-container">
+        <a href="/home" class="logo">
+            <img src="images/hephzibah.png" alt="School Logo" height="60">
+        </a>
+    </div>
+
+    <!-- Top Header -->
+    <div class="width-100 top-header">
+        <div class="container">
+            <div class="width-100">
+                <b class="new-list"><i class="fas fa-chalkboard-teacher"></i> TEACHER DASHBOARD :</b>
+                <marquee class="headquote" id="dashboard-marquee">
+                    Welcome to your dashboard - Manual Result Entry System
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="width-100 header-menu">
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="main-menu" id="main-menu">
+                <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+                <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+                <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                <li><a href="/teacher-login"><i class="fas fa-chalkboard-teacher"></i> Teacher</a></li>
+                <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/dashboard-bg.jpg'); min-height: 200px; padding: 60px 0;">
+        <div class="container">
+            <h1 id="teacher-welcome">Teacher Dashboard</h1>
+            <p id="teacher-info">Loading your information...</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="width-100 padding-50">
+        <div class="container">
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+
+            <!-- Test Storage Button -->
+            <div style="margin-bottom: 10px; text-align: right;">
+                <button class="btn btn-sm" onclick="testStorage()" style="background: #27ae60; color: white; margin-right: 10px;">
+                    <i class="fas fa-database"></i> Test Storage
+                </button>
+            </div>
+
+            <div class="portal-container">
+                <!-- Sidebar -->
+                <div class="portal-sidebar">
+                    <div class="profile-info" style="flex-direction: column; text-align: center; padding: 0; margin-bottom: 30px; background: transparent;">
+                        <div class="profile-pic">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <h3 style="color: white;" id="sidebar-teacher-name">Loading...</h3>
+                            <p style="color: rgba(255,255,255,0.8);" id="sidebar-teacher-title">Loading...</p>
+                        </div>
+                    </div>
+
+                    <ul class="portal-nav">
+                        <li><a href="#" class="active" onclick="showSection(event, 'dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#" onclick="showSection(event, 'enter-results')"><i class="fas fa-pen"></i> Enter Results</a></li>
+                        <li><a href="#" onclick="showSection(event, 'psychomotor')"><i class="fas fa-heart"></i> Psychomotor</a></li>
+                        <li><a href="#" onclick="showSection(event, 'manage-results')"><i class="fas fa-chart-line"></i> View Results</a></li>
+                        <li><a href="#" onclick="showSection(event, 'my-students')"><i class="fas fa-users"></i> My Students</a></li>
+                        <li><a href="#" onclick="showSection(event, 'reports')"><i class="fas fa-file-alt"></i> Reports</a></li>
+                        <li><a href="#" onclick="showSection(event, 'profile')"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="portal-content">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-section" class="section-content">
+                        <div class="alert alert-success" id="welcome-alert">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong id="welcome-message">Welcome back!</strong>
+                                <p id="welcome-details">Loading your dashboard...</p>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">Quick Actions</h3>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="showSection(event, 'enter-results')">
+                                <i class="fas fa-pen"></i> Enter New Results
+                            </button>
+                            <button class="btn" onclick="showSection(event, 'manage-results')">
+                                <i class="fas fa-eye"></i> View Results
+                            </button>
+                            <button class="btn" onclick="showSection(event, 'my-students')">
+                                <i class="fas fa-users"></i> My Students
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Enter Results Section -->
+                    <div id="enter-results-section" class="section-content" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="color: var(--primary);">
+                                <i class="fas fa-pen"></i> Manual Result Entry
+                            </h3>
+                            <div>
+                                <button class="btn btn-primary" onclick="saveAllResults()">
+                                    <i class="fas fa-save"></i> Save All Results
+                                </button>
+                                <button class="btn" onclick="clearAllInputs()">
+                                    <i class="fas fa-undo"></i> Clear All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="search-box">
+                            <input type="text" id="student-search" placeholder="Search student...">
+                            <select class="filter-select" id="class-filter">
+                                <option value="">All Classes</option>
+                            </select>
+                            <select class="filter-select" id="term-select">
+                                <option value="Term 1">Term 1</option>
+                                <option value="Term 2">Term 2</option>
+                                <option value="Term 3">Term 3</option>
+                            </select>
+                        </div>
+
+                        <!-- Results Container -->
+                        <div id="student-results-container">
+                            <!-- Dynamically populated -->
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: center; color: var(--text-light);">
+                            <i class="fas fa-info-circle"></i> Project (10 marks), Test (30 marks), Exam (60 marks) - Total per subject = 100 marks
+                        </div>
+                    </div>
+
+                    <!-- Psychomotor Assessment Section (MOVED OUTSIDE Enter Results) -->
+                    <div id="psychomotor-section" class="section-content" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="color: var(--primary);">
+                                <i class="fas fa-heart"></i> Psychomotor Assessment
+                            </h3>
+                            <div>
+                                <button class="btn btn-primary" onclick="saveAllPsychomotor()">
+                                    <i class="fas fa-save"></i> Save All Assessments
+                                </button>
+                                <button class="btn" onclick="clearAllPsychomotor()">
+                                    <i class="fas fa-undo"></i> Clear All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="search-box">
+                            <input type="text" id="psycho-student-search" placeholder="Search student...">
+                            <select class="filter-select" id="psycho-class-filter">
+                                <option value="">All Classes</option>
+                            </select>
+                            <select class="filter-select" id="psycho-term-select">
+                                <option value="Term 1">Term 1</option>
+                                <option value="Term 2">Term 2</option>
+                                <option value="Term 3">Term 3</option>
+                            </select>
+                        </div>
+
+                        <!-- Psychomotor Skills Definition -->
+                        <div class="alert alert-info" style="margin-bottom: 20px;">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Psychomotor Skills Grading (A, B, C, D, F)</strong>
+                                <p>Rate each student on a scale of A (Excellent) to F (Very Poor)</p>
+                            </div>
+                        </div>
+
+                        <!-- Psychomotor Assessment Container -->
+                        <div id="psychomotor-container">
+                            <div class="alert alert-warning">Loading students...</div>
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: center; color: var(--text-light);">
+                            <i class="fas fa-info-circle"></i> Rate each skill: A (Excellent), B (Good), C (Average), D (Below Average), F (Poor)
+                        </div>
+                    </div>
+
+                    <!-- View Results Section -->
+                    <div id="manage-results-section" class="section-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">
+                            <i class="fas fa-chart-line"></i> Student Results Overview
+                        </h3>
+
+                        <div class="search-box">
+                            <input type="text" id="view-search" placeholder="Search student...">
+                            <select class="filter-select" id="view-class-filter">
+                                <option value="">All Classes</option>
+                            </select>
+                            <select class="filter-select" id="view-term-filter">
+                                <option value="">All Terms</option>
+                                <option value="Term 1">Term 1</option>
+                                <option value="Term 2">Term 2</option>
+                                <option value="Term 3">Term 3</option>
+                            </select>
+                        </div>
+
+                        <!-- Summary Cards -->
+                        <div id="summary-cards" class="dashboard-grid" style="margin-bottom: 30px;">
+                            <!-- Dynamically populated -->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="grades-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Class</th>
+                                        <th>Subject</th>
+                                        <th>Project</th>
+                                        <th>Test</th>
+                                        <th>Exam</th>
+                                        <th>Total</th>
+                                        <th>Grade</th>
+                                        <th>Term</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="view-results-tbody">
+                                    <!-- Dynamically populated -->
+                                </tbody>
+                                <tfoot id="summary-footer" style="background: #f8f9fa; font-weight: bold;">
+                                    <!-- Dynamically populated -->
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- My Students Section -->
+                    <div id="my-students-section" class="section-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">
+                            <i class="fas fa-users"></i> My Students
+                        </h3>
+
+                        <div class="search-box">
+                            <input type="text" id="student-list-search" placeholder="Search students...">
+                            <select class="filter-select" id="student-class-filter">
+                                <option value="">All Classes</option>
+                            </select>
+                        </div>
+
+                        <table class="grades-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Parent</th>
+                                    <th>Contact</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-tbody">
+                                <!-- Dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Reports Section -->
+                    <div id="reports-section" class="section-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">
+                            <i class="fas fa-file-alt"></i> Generate Reports
+                        </h3>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Select Class</label>
+                                <select class="form-control" id="report-class">
+                                    <option value="">Select Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Term</label>
+                                <select class="form-control" id="report-term">
+                                    <option value="Term 1">Term 1</option>
+                                    <option value="Term 2">Term 2</option>
+                                    <option value="Term 3">Term 3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="generateReport()">
+                            <i class="fas fa-file-pdf"></i> Generate Report
+                        </button>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div id="profile-section" class="section-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">
+                            <i class="fas fa-user-circle"></i> My Profile
+                        </h3>
+
+                        <div class="profile-info" style="background: white; border: 1px solid #ecf0f1;">
+                            <div class="profile-pic" style="width: 100px; height: 100px;">
+                                <i class="fas fa-user-tie" style="font-size: 50px;"></i>
+                            </div>
+                            <div class="profile-details" id="profile-details">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="width-100 footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Teacher Support</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +234 808 675 0620</li>
+                        <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="/portal"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Hephzibah Vics Montessori - Teacher Dashboard. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== TEACHER DATA ====================
+        const teachers = [
+            { id: 1, username: "mrs_igwe", password: "igwe123", name: "Mrs. Igwe", title: "Teacher", classes: ["Lily"], subjects: ["Mathematics", "General Studies"], email: "igwe@hephzibah.edu", phone: "+234 801 234 5678" },
+            { id: 2, username: "mrs_eromonsele", password: "eromonsele123", name: "Mrs. Eromonsele", title: "Teacher", classes: ["Buttercup"], subjects: ["Mathematics", "General Studies"], email: "eromonsele@hephzibah.edu", phone: "+234 801 234 5678" },
+            { id: 3, username: "mrs_odjoh", password: "odjoh123", name: "Mrs. Odjoh", title: "Teacher", classes: ["Infant foundation 1"], subjects: ["Montessori Method", "Practical Life"], email: "odjoh@hephzibah.edu", phone: "+234 802 345 6789" },
+            { id: 4, username: "mrs_warrens", password: "warrens123", name: "Mrs. Charity Warrens", title: "Head Mistress", classes: ["Infant foundation 2"], subjects: ["English", "Science"], email: "warrens@hephzibah.edu", phone: "+234 803 456 7890" },
+            { id: 5, username: "mr_solomon", password: "solomon123", name: "Mr. Solomon Ubom", title: "Teacher", classes: ["Grade 1a"], subjects: ["Civic Education"], email: "solomon@hephzibah.edu", phone: "+234 804 567 8901" },
+            { id: 6, username: "mrs_olusuno", password: "olusuno123", name: "Mrs. Olusuno", title: "Teacher", classes: ["Grade 1b"], subjects: ["Sensorial", "Language"], email: "olusuno@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 7, username: "mrs_peters", password: "peters123", name: "Mrs. Peters", title: "Teacher", classes: ["Grade 2"], subjects: ["Sensorial", "Language"], email: "peters@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 8, username: "mrs_adesuwa", password: "adesuwa123", name: "Mrs. Adesuwa", title: "Teacher", classes: ["Grade 3"], subjects: ["Sensorial", "Language"], email: "adesuwa@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 9, username: "mr_p", password: "pere123", name: "Mr. Pere", title: "Teacher", classes: ["Grade 4"], subjects: ["Mathematics", "Social Studies"], email: "pere@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 10, username: "mrs_daniels", password: "daniels123", name: "Mrs. Daniels", title: "Teacher", classes: ["Grade 5"], subjects: ["Literacy"], email: "daniels@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 11, username: "mrs_cynthia", password: "cynthia123", name: "Mrs. Cynthia", title: "Teacher", classes: ["JSS 1"], subjects: ["Literacy", "Language"], email: "cynthia@hephzibah.edu", phone: "+234 805 678 9012" },
+            { id: 12, username: "mr_john", password: "john123", name: "Mr. John Okon", title: "Teacher", classes: ["JSS 2"], subjects: ["Sensorial", "Language"], email: "john@hephzibah.edu", phone: "+234 805 678 9012" }
+        ];
+
+        // Student database
+        const allStudents = [
+            { id: 'STU001', name: 'Sarah Johnson', class: 'Grade 1a', parent: 'Mr. Johnson', phone: '+234 812 345 6789' },
+            { id: 'STU002', name: 'Michael Okafor', class: 'Grade 1a', parent: 'Mrs. Okafor', phone: '+234 803 456 7890' },
+            { id: 'STU003', name: 'Amara Eze', class: 'Grade 1a', parent: 'Dr. Eze', phone: '+234 805 678 9012' },
+            { id: 'STU004', name: 'Chidi Okonkwo', class: 'Grade 1b', parent: 'Mr. Okonkwo', phone: '+234 802 345 6789' },
+            { id: 'STU005', name: 'Ngozi Adichie', class: 'Grade 1b', parent: 'Prof. Adichie', phone: '+234 806 789 0123' },
+            { id: 'STU006', name: 'Emma Warrens', class: 'Infant foundation 2', parent: 'Mrs. Warrens', phone: '+234 807 890 1234' },
+            { id: 'STU007', name: 'David Obi', class: 'Buttercup', parent: 'Ms. Obi', phone: '+234 808 901 2345' },
+            { id: 'STU008', name: 'Grace Ajiferuke', class: 'Grade 3', parent: 'Mrs. Ajiferuke', phone: '+234 809 012 3456' },
+            { id: 'STU009', name: 'Blessing Peters', class: 'Grade 2', parent: 'Mrs. Peters', phone: '+234 810 123 4567' },
+            { id: 'STU010', name: 'Victor Adesuwa', class: 'Grade 3', parent: 'Mrs. Adesuwa', phone: '+234 811 234 5678' },
+            { id: 'STU011', name: 'Precious Pere', class: 'Grade 4', parent: 'Mr. Pere', phone: '+234 812 345 6789' },
+            { id: 'STU012', name: 'Daniel Daniels', class: 'Grade 5', parent: 'Mrs. Daniels', phone: '+234 813 456 7890' },
+            { id: 'STU013', name: 'Cynthia Cynthia', class: 'JSS 1', parent: 'Mrs. Cynthia', phone: '+234 814 567 8901' },
+            { id: 'STU014', name: 'John Okon Jr.', class: 'JSS 2', parent: 'Mr. John Okon', phone: '+234 815 678 9012' }
+        ];
+
+        // ==================== SUBJECTS BY CLASS LEVEL ====================
+        const subjectGroups = {
+            // Infant Foundation Classes
+            infant: [
+                "Numeracy",
+                "Literacy",
+                "Basic Science",
+                "Social Habits",
+                "Health Habits",
+                "Writing",
+                "Rhymes",
+                "Story Time",
+                "Free Play",
+                "Music",
+                "Coloring"
+            ],
+
+            // Primary/Grade 1-3 Classes (No Coding)
+            primaryLower: [
+                "Numeracy",
+                "Literacy",
+                "Basic Science",
+                "ICT",
+                "Agricultural Science",
+                "Social Studies",
+                "Civic Education",
+                "Verbal Reasoning",
+                "Non verbal reasoning",
+                "CRS",
+                "PHE",
+                "Quantitative",
+                "Home Economics",
+                "Music",
+                "French",
+                "Mental Maths",
+                "History"
+            ],
+
+            // Primary/Grade 4-5 Classes (With Coding)
+            primaryUpper: [
+                "Numeracy",
+                "Literacy",
+                "Basic Science",
+                "ICT",
+                "Agricultural Science",
+                "Social Studies",
+                "Civic Education",
+                "Verbal Reasoning",
+                "Non verbal reasoning",
+                "CRS",
+                "PHE",
+                "Quantitative",
+                "Home Economics",
+                "Music",
+                "French",
+                "Coding",
+                "Mental Maths",
+                "History"
+            ],
+
+            // JSS 1-2 Classes
+            jss: [
+                "Mathematics",
+                "English Studies",
+                "Basic Science",
+                "Basic Technology",
+                "ICT",
+                "Agricultural Science",
+                "Social Studies",
+                "Civic Education",
+                "CRS",
+                "PHE",
+                "Business Studies",
+                "Home Economics",
+                "French",
+                "Music",
+                "Fine Arts",
+                "History",
+                "Coding",
+                "Mental Maths"
+            ]
+        };
+
+        const classSubjectMap = {
+            "Lily": "infant",
+            "Buttercup": "infant",
+            "Infant foundation 1": "infant",
+            "Infant foundation 2": "infant",
+            "Grade 1a": "primaryLower",
+            "Grade 1b": "primaryLower",
+            "Grade 2": "primaryLower",
+            "Grade 3": "primaryLower",
+            "Grade 4": "primaryUpper",
+            "Grade 5": "primaryUpper",
+            "JSS 1": "jss",
+            "JSS 2": "jss"
+        };
+
+        // Function to get subjects for a class
+        function getSubjectsForClass(className) {
+            const group = classSubjectMap[className] || "primaryLower";
+            return subjectGroups[group];
+        }
+
+        // Results storage - initialize with error handling
+        let results = [];
+        try {
+            const savedResults = localStorage.getItem('teacherResults');
+            if (savedResults) {
+                results = JSON.parse(savedResults);
+                console.log('Loaded results from localStorage:', results.length);
+            } else {
+                console.log('No results found in localStorage, starting fresh');
+                results = [];
+            }
+        } catch (e) {
+            console.error('Error loading results:', e);
+            results = [];
+        }
+
+        // Psychomotor results storage
+        let psychomotorResults = JSON.parse(localStorage.getItem('psychomotorResults')) || [];
+
+        // Current teacher
+        let currentTeacher = null;
+
+        // ==================== PSYCHOMOTOR ASSESSMENT ====================
+        // Psychomotor skills to assess
+        const psychomotorSkills = [
+            "Sports & Games Performance",
+            "Grace & Courtesy",
+            "Verbal Communication",
+            "Participation in Devotional Session",
+            "Respect for Rights of Others",
+            "Participation in Group Activities",
+            "Level of Concentration",
+            "Neatness"
+        ];
+
+        // Load psychomotor assessment table
+        function loadPsychomotorTable() {
+            console.log('Loading psychomotor table...');
+            const container = document.getElementById('psychomotor-container');
+            if (!container) {
+                console.error('Psychomotor container not found');
+                return;
+            }
+
+            const teacherStudents = allStudents.filter(s => currentTeacher.classes.includes(s.class));
+            const classFilter = document.getElementById('psycho-class-filter')?.value || '';
+            const searchText = document.getElementById('psycho-student-search')?.value.toLowerCase() || '';
+            const term = document.getElementById('psycho-term-select')?.value || 'Term 1';
+
+            let filteredStudents = teacherStudents;
+
+            if (classFilter) {
+                filteredStudents = filteredStudents.filter(s => s.class === classFilter);
+            }
+
+            if (searchText) {
+                filteredStudents = filteredStudents.filter(s => s.name.toLowerCase().includes(searchText));
+            }
+
+            if (filteredStudents.length === 0) {
+                container.innerHTML = '<div class="alert alert-warning">No students found</div>';
+                return;
+            }
+
+            let html = '';
+            filteredStudents.forEach(student => {
+                // Get existing psychomotor results for this student
+                const existingResults = psychomotorResults.filter(r =>
+                    r.studentName === student.name &&
+                    r.term === term
+                );
+
+                // Create a map of skill -> grade
+                const skillGrades = {};
+                existingResults.forEach(r => {
+                    skillGrades[r.skill] = r.grade;
+                });
+
+                html += `
+                    <div class="content-card" style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                        <div style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; padding: 15px;">
+                            <h4 style="margin: 0; color: white; display: flex; align-items: center;">
+                                <i class="fas fa-user-graduate" style="margin-right: 10px;"></i>
+                                ${student.name} - ${student.class}
+                                <span style="margin-left: auto; font-size: 14px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px;">
+                                    <i class="fas fa-calendar"></i> ${term}
+                                </span>
+                            </h4>
+                        </div>
+
+                        <div style="padding: 20px; background: white;">
+                            <table class="grades-table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8f9fa;">
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Psychomotor Skill</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #9b59b6; color: white;">Grade (A-F)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="psycho-rows-${student.name.replace(/\s/g, '')}">
+                `;
+
+                // Add a row for each psychomotor skill
+                psychomotorSkills.forEach(skill => {
+                    const grade = skillGrades[skill] || '';
+
+                    html += `
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px; font-weight: 600; background: #f8f9fa;">${skill}</td>
+                            <td style="padding: 5px; text-align: center;">
+                                <select class="form-control psychomotor-select"
+                                    data-student="${student.name}"
+                                    data-skill="${skill}"
+                                    style="width: 140px; padding: 8px; text-align: center; border: 2px solid #ecf0f1; border-radius: 4px;"
+                                    onchange="updatePsychomotorGrade(this, '${student.name}', '${skill}', '${term}')">
+                                    <option value="">Select Grade</option>
+                                    <option value="A" ${grade === 'A' ? 'selected' : ''}>A - Excellent</option>
+                                    <option value="B" ${grade === 'B' ? 'selected' : ''}>B - Good</option>
+                                    <option value="C" ${grade === 'C' ? 'selected' : ''}>C - Average</option>
+                                    <option value="D" ${grade === 'D' ? 'selected' : ''}>D - Below Average</option>
+                                    <option value="F" ${grade === 'F' ? 'selected' : ''}>F - Poor</option>
+                                </select>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Calculate summary
+                const totalSkills = psychomotorSkills.length;
+                const gradedSkills = Object.keys(skillGrades).length;
+                const summaryGrade = calculatePsychomotorAverage(skillGrades);
+
+                html += `
+                                    <tr style="background: #e8f4fc; font-weight: bold; border-top: 2px solid #9b59b6;">
+                                        <td style="padding: 15px; text-align: right; font-size: 16px;">SUMMARY:</td>
+                                        <td style="padding: 15px; text-align: center; font-size: 16px;" id="psycho-summary-${student.name.replace(/\s/g, '')}">
+                                            <span class="grade-badge grade-${summaryGrade.toLowerCase()}">${summaryGrade} (${gradedSkills}/${totalSkills} skills graded)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 10px;">
+                                <button class="btn btn-success" onclick="saveStudentPsychomotor('${student.name}', '${term}')" style="padding: 12px 30px;">
+                                    <i class="fas fa-save"></i> Save ${student.name}'s Assessment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Calculate psychomotor average (convert letter grades to points)
+        function calculatePsychomotorAverage(skillGrades) {
+            const gradePoints = { 'A': 5, 'B': 4, 'C': 3, 'D': 2, 'F': 1 };
+            let totalPoints = 0;
+            let count = 0;
+
+            for (const grade of Object.values(skillGrades)) {
+                if (grade && gradePoints[grade]) {
+                    totalPoints += gradePoints[grade];
+                    count++;
+                }
+            }
+
+            if (count === 0) return '-';
+
+            const averagePoint = totalPoints / count;
+
+            // Convert back to letter grade
+            if (averagePoint >= 4.5) return 'A';
+            if (averagePoint >= 3.5) return 'B';
+            if (averagePoint >= 2.5) return 'C';
+            if (averagePoint >= 1.5) return 'D';
+            return 'F';
+        }
+
+        // Update psychomotor grade when select changes
+        function updatePsychomotorGrade(select, studentName, skill, term) {
+            const grade = select.value;
+
+            // Find or create result in psychomotorResults
+            const index = psychomotorResults.findIndex(r =>
+                r.studentName === studentName &&
+                r.skill === skill &&
+                r.term === term
+            );
+
+            if (grade) {
+                const result = {
+                    studentName: studentName,
+                    skill: skill,
+                    term: term,
+                    grade: grade,
+                    date: new Date().toISOString()
+                };
+
+                if (index >= 0) {
+                    psychomotorResults[index] = result;
+                } else {
+                    psychomotorResults.push(result);
+                }
+            } else {
+                // Remove if grade is cleared
+                if (index >= 0) {
+                    psychomotorResults.splice(index, 1);
+                }
+            }
+
+            // Update the summary row for this student
+            updateStudentPsychomotorSummary(studentName, term);
+        }
+
+        // Update student's psychomotor summary
+        function updateStudentPsychomotorSummary(studentName, term) {
+            const studentResults = psychomotorResults.filter(r =>
+                r.studentName === studentName && r.term === term
+            );
+
+            const skillGrades = {};
+            studentResults.forEach(r => {
+                skillGrades[r.skill] = r.grade;
+            });
+
+            const summaryGrade = calculatePsychomotorAverage(skillGrades);
+            const totalSkills = psychomotorSkills.length;
+            const gradedSkills = Object.keys(skillGrades).length;
+
+            // Find the summary cell and update it
+            const summaryCell = document.getElementById(`psycho-summary-${studentName.replace(/\s/g, '')}`);
+            if (summaryCell) {
+                summaryCell.innerHTML = `<span class="grade-badge grade-${summaryGrade.toLowerCase()}">${summaryGrade} (${gradedSkills}/${totalSkills} skills graded)</span>`;
+            }
+        }
+
+        // Save all psychomotor assessments for a student
+        function saveStudentPsychomotor(studentName, term) {
+            const student = allStudents.find(s => s.name === studentName);
+
+            if (!student) {
+                showInputWarning(`Student ${studentName} not found`);
+                return;
+            }
+
+            // Get all selects for this student
+            const selects = document.querySelectorAll(`.psychomotor-select[data-student="${studentName}"]`);
+            let savedCount = 0;
+
+            selects.forEach(select => {
+                const skill = select.getAttribute('data-skill');
+                const grade = select.value;
+
+                if (grade) {
+                    const result = {
+                        studentName: studentName,
+                        studentClass: student.class,
+                        skill: skill,
+                        term: term,
+                        grade: grade,
+                        date: new Date().toISOString()
+                    };
+
+                    const index = psychomotorResults.findIndex(r =>
+                        r.studentName === studentName &&
+                        r.skill === skill &&
+                        r.term === term
+                    );
+
+                    if (index >= 0) {
+                        psychomotorResults[index] = result;
+                    } else {
+                        psychomotorResults.push(result);
+                    }
+
+                    savedCount++;
+                }
+            });
+
+            // Save to localStorage
+            localStorage.setItem('psychomotorResults', JSON.stringify(psychomotorResults));
+
+            showSuccessMessage(`Saved ${savedCount} psychomotor assessments for ${studentName} (${term})`);
+        }
+
+        // Save all psychomotor assessments for all students
+        function saveAllPsychomotor() {
+            const container = document.getElementById('psychomotor-container');
+            const studentTables = container.querySelectorAll('.content-card');
+            let totalSaved = 0;
+            const term = document.getElementById('psycho-term-select').value;
+
+            studentTables.forEach(table => {
+                const headerText = table.querySelector('h4').textContent;
+                const studentName = headerText.split(' - ')[0].replace('🎓 ', '');
+                const student = allStudents.find(s => s.name === studentName);
+
+                if (!student) return;
+
+                const selects = table.querySelectorAll('.psychomotor-select');
+                let studentSaved = 0;
+
+                selects.forEach(select => {
+                    const skill = select.getAttribute('data-skill');
+                    const grade = select.value;
+
+                    if (grade) {
+                        const result = {
+                            studentName: studentName,
+                            studentClass: student.class,
+                            skill: skill,
+                            term: term,
+                            grade: grade,
+                            date: new Date().toISOString()
+                        };
+
+                        const index = psychomotorResults.findIndex(r =>
+                            r.studentName === studentName &&
+                            r.skill === skill &&
+                            r.term === term
+                        );
+
+                        if (index >= 0) {
+                            psychomotorResults[index] = result;
+                        } else {
+                            psychomotorResults.push(result);
+                        }
+
+                        studentSaved++;
+                    }
+                });
+
+                totalSaved += studentSaved;
+                updateStudentPsychomotorSummary(studentName, term);
+            });
+
+            localStorage.setItem('psychomotorResults', JSON.stringify(psychomotorResults));
+            showSuccessMessage(`Saved ${totalSaved} psychomotor assessments across all students`);
+        }
+
+        // Clear all psychomotor inputs
+        function clearAllPsychomotor() {
+            if (confirm('Clear all psychomotor assessments for all students?')) {
+                document.querySelectorAll('.psychomotor-select').forEach(select => {
+                    select.value = '';
+                });
+                showSuccessMessage('All psychomotor inputs cleared');
+            }
+        }
+
+        // Make sure results are saved after every change
+        function ensureResultsSaved() {
+            localStorage.setItem('teacherResults', JSON.stringify(results));
+            console.log('Results saved to localStorage. Total:', results.length);
+            // Trigger event for other tabs
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        // ==================== INITIALIZATION ====================
+        function initTeacherDashboard() {
+            const storedTeacher = sessionStorage.getItem('currentTeacher');
+
+            if (storedTeacher) {
+                currentTeacher = JSON.parse(storedTeacher);
+            } else {
+                window.location.href = '/teacher-login';
+                return;
+            }
+
+            updateUIForTeacher();
+            loadResultEntryTable();
+            loadViewResults();
+            loadStudentsList();
+        }
+
+        function updateUIForTeacher() {
+            document.getElementById('teacher-welcome').textContent = `${currentTeacher.name}'s Dashboard`;
+            document.getElementById('teacher-info').textContent = `${currentTeacher.title} | Class: ${currentTeacher.classes.join(', ')}`;
+            document.getElementById('welcome-message').textContent = `Welcome back, ${currentTeacher.name}!`;
+            document.getElementById('welcome-details').textContent = `You teach ${currentTeacher.classes.length} class and have ${getStudentCount()} students.`;
+            document.getElementById('dashboard-marquee').textContent = `Welcome back, ${currentTeacher.name} | ${currentTeacher.title} | Class: ${currentTeacher.classes.join(', ')}`;
+
+            document.getElementById('sidebar-teacher-name').textContent = currentTeacher.name;
+            document.getElementById('sidebar-teacher-title').textContent = currentTeacher.title;
+
+            document.getElementById('profile-details').innerHTML = `
+                <h3>${currentTeacher.name}</h3>
+                <p><strong>Title:</strong> ${currentTeacher.title}</p>
+                <p><strong>Email:</strong> ${currentTeacher.email}</p>
+                <p><strong>Phone:</strong> ${currentTeacher.phone}</p>
+                <p><strong>Classes:</strong> ${currentTeacher.classes.map(c => `<span class="class-badge">${c}</span>`).join(' ')}</p>
+                <p><strong>Subjects:</strong> ${currentTeacher.subjects.map(s => `<span class="class-badge">${s}</span>`).join(' ')}</p>
+            `;
+
+            updateFilters();
+        }
+
+        function getStudentCount() {
+            return allStudents.filter(s => currentTeacher.classes.includes(s.class)).length;
+        }
+
+        function updateFilters() {
+            const filters = ['class-filter', 'view-class-filter', 'student-class-filter', 'report-class', 'psycho-class-filter'];
+
+            filters.forEach(filterId => {
+                const select = document.getElementById(filterId);
+                if (select) {
+                    select.innerHTML = '<option value="">All Classes</option>' +
+                        currentTeacher.classes.map(c => `<option value="${c}">${c}</option>`).join('');
+                }
+            });
+        }
+
+        // ==================== RESULT ENTRY TABLE ====================
+        function loadResultEntryTable() {
+            const container = document.getElementById('student-results-container');
+            const teacherStudents = allStudents.filter(s => currentTeacher.classes.includes(s.class));
+            const classFilter = document.getElementById('class-filter')?.value || '';
+            const searchText = document.getElementById('student-search')?.value.toLowerCase() || '';
+            const term = document.getElementById('term-select')?.value || 'Term 1';
+
+            let filteredStudents = teacherStudents;
+
+            if (classFilter) {
+                filteredStudents = filteredStudents.filter(s => s.class === classFilter);
+            }
+
+            if (searchText) {
+                filteredStudents = filteredStudents.filter(s => s.name.toLowerCase().includes(searchText));
+            }
+
+            if (filteredStudents.length === 0) {
+                container.innerHTML = '<div class="alert alert-warning">No students found</div>';
+                return;
+            }
+
+            let html = '';
+            filteredStudents.forEach(student => {
+                const studentSubjects = getSubjectsForClass(student.class);
+
+                // Get existing results for this student
+                const existingResults = results.filter(r =>
+                    r.studentName === student.name &&
+                    r.term === term
+                );
+
+                // Create a map of subject -> scores
+                const subjectScores = {};
+                existingResults.forEach(r => {
+                    subjectScores[r.subject] = {
+                        project: r.project || 0,
+                        test: r.test || 0,
+                        exam: r.exam || 0
+                    };
+                });
+
+                html += `
+                    <div class="content-card" style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                        <div style="background: linear-gradient(135deg, var(--primary), #1a252f); color: white; padding: 15px;">
+                            <h4 style="margin: 0; color: white; display: flex; align-items: center;">
+                                <i class="fas fa-user-graduate" style="margin-right: 10px;"></i>
+                                ${student.name} - ${student.class}
+                                <span style="margin-left: auto; font-size: 14px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px;">
+                                    <i class="fas fa-calendar"></i> ${term}
+                                </span>
+                            </h4>
+                        </div>
+
+                        <div style="padding: 20px; background: white;">
+                            <table class="grades-table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8f9fa;">
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Subject</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #f39c12; color: white;">Project (10)</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #3498db; color: white;">Test (30)</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #2ecc71; color: white;">Exam (60)</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #e74c3c; color: white;">Total (100)</th>
+                                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; background: #9b59b6; color: white;">Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subject-rows-${student.name.replace(/\s/g, '')}">
+                `;
+
+                // Add a row for each subject based on class
+                studentSubjects.forEach(subject => {
+                    const scores = subjectScores[subject] || { project: 0, test: 0, exam: 0 };
+                    const total = (scores.project || 0) + (scores.test || 0) + (scores.exam || 0);
+                    const grade = total > 0 ? calculateGrade(total) : '-';
+
+                    html += `
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px; font-weight: 600; background: #f8f9fa;">${subject}</td>
+                            <td style="padding: 5px; text-align: center;">
+                                <input type="number" class="result-input project-input"
+                                    data-student="${student.name}"
+                                    data-subject="${subject}"
+                                    value="${scores.project || ''}"
+                                    min="0" max="10" step="0.5"
+                                    style="width: 70px; padding: 8px; text-align: center; border: 2px solid #ecf0f1; border-radius: 4px;"
+                                    placeholder="0-10"
+                                    onchange="calculateRowTotal(this, '${student.name}', '${subject}')">
+                            </td>
+                            <td style="padding: 5px; text-align: center;">
+                                <input type="number" class="result-input test-input"
+                                    data-student="${student.name}"
+                                    data-subject="${subject}"
+                                    value="${scores.test || ''}"
+                                    min="0" max="30" step="0.5"
+                                    style="width: 70px; padding: 8px; text-align: center; border: 2px solid #ecf0f1; border-radius: 4px;"
+                                    placeholder="0-30"
+                                    onchange="calculateRowTotal(this, '${student.name}', '${subject}')">
+                            </td>
+                            <td style="padding: 5px; text-align: center;">
+                                <input type="number" class="result-input exam-input"
+                                    data-student="${student.name}"
+                                    data-subject="${subject}"
+                                    value="${scores.exam || ''}"
+                                    min="0" max="60" step="0.5"
+                                    style="width: 70px; padding: 8px; text-align: center; border: 2px solid #ecf0f1; border-radius: 4px;"
+                                    placeholder="0-60"
+                                    onchange="calculateRowTotal(this, '${student.name}', '${subject}')">
+                            </td>
+                            <td class="subject-total-${student.name.replace(/\s/g, '')}-${subject.replace(/\s/g, '')}"
+                                style="padding: 10px; text-align: center; font-weight: bold; background: #fff3cd;">
+                                ${total > 0 ? total : '-'}
+                            </td>
+                            <td class="subject-grade-${student.name.replace(/\s/g, '')}-${subject.replace(/\s/g, '')}"
+                                style="padding: 10px; text-align: center;">
+                                ${grade !== '-' ? `<span class="grade-badge grade-${grade.toLowerCase()}">${grade}</span>` : '-'}
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Calculate overall totals
+                let runningTotal = 0;
+                let subjectCount = 0;
+
+                studentSubjects.forEach(subject => {
+                    const scores = subjectScores[subject] || { project: 0, test: 0, exam: 0 };
+                    const total = (scores.project || 0) + (scores.test || 0) + (scores.exam || 0);
+                    if (total > 0) {
+                        runningTotal += total;
+                        subjectCount++;
+                    }
+                });
+
+                const overallAvg = subjectCount > 0 ? (runningTotal / subjectCount).toFixed(1) : '-';
+                const overallGrade = overallAvg !== '-' ? calculateGrade(parseFloat(overallAvg)) : '-';
+
+                html += `
+                                    <tr style="background: #e8f4fc; font-weight: bold; border-top: 2px solid #3498db;">
+                                        <td colspan="5" style="padding: 15px; text-align: right; font-size: 16px;">TOTAL SCORE:</td>
+                                        <td style="padding: 15px; text-align: center; font-size: 18px; color: #e74c3c;" id="overall-total-${student.name.replace(/\s/g, '')}">
+                                            ${runningTotal || '-'}
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #d4edda; font-weight: bold;">
+                                        <td colspan="5" style="padding: 15px; text-align: right; font-size: 16px;">AVERAGE SCORE:</td>
+                                        <td style="padding: 15px; text-align: center; font-size: 18px; color: #28a745;" id="overall-avg-${student.name.replace(/\s/g, '')}">
+                                            ${overallAvg}
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #f8d7da; font-weight: bold;">
+                                        <td colspan="5" style="padding: 15px; text-align: right; font-size: 16px;">OVERALL GRADE:</td>
+                                        <td style="padding: 15px; text-align: center;" id="overall-grade-${student.name.replace(/\s/g, '')}">
+                                            ${overallGrade !== '-' ? `<span class="grade-badge grade-${overallGrade.toLowerCase()}">${overallGrade}</span>` : '-'}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 10px;">
+                                <button class="btn btn-success" onclick="saveStudentResults('${student.name}', '${term}')" style="padding: 12px 30px;">
+                                    <i class="fas fa-save"></i> Save ${student.name}'s Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            addRealTimeListeners();
+        }
+
+        // Calculate row total when any input changes
+        function calculateRowTotal(input, studentName, subject) {
+            const row = input.closest('tr');
+            const project = parseFloat(row.querySelector('.project-input').value) || 0;
+            const test = parseFloat(row.querySelector('.test-input').value) || 0;
+            const exam = parseFloat(row.querySelector('.exam-input').value) || 0;
+
+            // Validate max values
+            if (project > 10) {
+                row.querySelector('.project-input').value = 10;
+                showInputWarning('Project maximum is 10 marks');
+            }
+            if (test > 30) {
+                row.querySelector('.test-input').value = 30;
+                showInputWarning('Test maximum is 30 marks');
+            }
+            if (exam > 60) {
+                row.querySelector('.exam-input').value = 60;
+                showInputWarning('Exam maximum is 60 marks');
+            }
+
+            const validProject = Math.min(project, 10);
+            const validTest = Math.min(test, 30);
+            const validExam = Math.min(exam, 60);
+
+            const total = validProject + validTest + validExam;
+            const grade = total > 0 ? calculateGrade(total) : '-';
+
+            // Update total and grade for this row
+            const studentId = studentName.replace(/\s/g, '');
+            const subjectId = subject.replace(/\s/g, '');
+
+            const totalCell = document.querySelector(`.subject-total-${studentId}-${subjectId}`);
+            const gradeCell = document.querySelector(`.subject-grade-${studentId}-${subjectId}`);
+
+            if (totalCell) {
+                totalCell.textContent = total > 0 ? total : '-';
+                totalCell.style.backgroundColor = '#d4edda';
+                setTimeout(() => {
+                    totalCell.style.backgroundColor = '';
+                }, 300);
+            }
+
+            if (gradeCell) {
+                gradeCell.innerHTML = grade !== '-' ?
+                    `<span class="grade-badge grade-${grade.toLowerCase()}">${grade}</span>` : '-';
+                gradeCell.style.backgroundColor = '#d4edda';
+                setTimeout(() => {
+                    gradeCell.style.backgroundColor = '';
+                }, 300);
+            }
+
+            // Recalculate overall totals for this student
+            calculateOverallTotals(studentName);
+        }
+
+        // Calculate overall totals for a student
+        function calculateOverallTotals(studentName) {
+            const studentId = studentName.replace(/\s/g, '');
+            const student = allStudents.find(s => s.name === studentName);
+            if (!student) return;
+
+            const studentSubjects = getSubjectsForClass(student.class);
+
+            let overallTotal = 0;
+            let subjectCount = 0;
+
+            studentSubjects.forEach(subject => {
+                const subjectId = subject.replace(/\s/g, '');
+                const totalCell = document.querySelector(`.subject-total-${studentId}-${subjectId}`);
+                if (totalCell) {
+                    const total = parseFloat(totalCell.textContent);
+                    if (!isNaN(total)) {
+                        overallTotal += total;
+                        subjectCount++;
+                    }
+                }
+            });
+
+            const overallAvg = subjectCount > 0 ? (overallTotal / subjectCount).toFixed(1) : '-';
+            const overallGrade = overallAvg !== '-' ? calculateGrade(parseFloat(overallAvg)) : '-';
+
+            const totalElement = document.getElementById(`overall-total-${studentId}`);
+            const avgElement = document.getElementById(`overall-avg-${studentId}`);
+            const gradeElement = document.getElementById(`overall-grade-${studentId}`);
+
+            if (totalElement) {
+                totalElement.textContent = overallTotal || '-';
+                totalElement.style.backgroundColor = '#d4edda';
+                setTimeout(() => {
+                    totalElement.style.backgroundColor = '';
+                }, 300);
+            }
+
+            if (avgElement) {
+                avgElement.textContent = overallAvg;
+                avgElement.style.backgroundColor = '#d4edda';
+                setTimeout(() => {
+                    avgElement.style.backgroundColor = '';
+                }, 300);
+            }
+
+            if (gradeElement) {
+                gradeElement.innerHTML = overallGrade !== '-' ?
+                    `<span class="grade-badge grade-${overallGrade.toLowerCase()}">${overallGrade}</span>` : '-';
+                gradeElement.style.backgroundColor = '#d4edda';
+                setTimeout(() => {
+                    gradeElement.style.backgroundColor = '';
+                }, 300);
+            }
+        }
+
+        // Calculate grade from score
+        function calculateGrade(score) {
+            if (score >= 80) return 'A';
+            if (score >= 60) return 'B';
+            if (score >= 50) return 'C';
+            if (score >= 40) return 'D';
+            if (score >= 30) return 'E';
+            return 'F';
+        }
+
+        // Show input warning
+        function showInputWarning(message) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'alert alert-warning';
+            warningDiv.style.position = 'fixed';
+            warningDiv.style.top = '20px';
+            warningDiv.style.right = '20px';
+            warningDiv.style.zIndex = '9999';
+            warningDiv.style.padding = '10px 20px';
+            warningDiv.style.borderRadius = '5px';
+            warningDiv.style.backgroundColor = '#fff3cd';
+            warningDiv.style.color = '#856404';
+            warningDiv.style.border = '1px solid #ffeaa7';
+            warningDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+
+            document.body.appendChild(warningDiv);
+
+            setTimeout(() => {
+                warningDiv.remove();
+            }, 2000);
+        }
+
+        // Add real-time listeners
+        function addRealTimeListeners() {
+            document.querySelectorAll('.project-input, .test-input, .exam-input').forEach(input => {
+                input.removeEventListener('input', handleInput);
+                input.addEventListener('input', handleInput);
+            });
+        }
+
+        function handleInput(e) {
+            const studentName = e.target.getAttribute('data-student');
+            const subject = e.target.getAttribute('data-subject');
+            calculateRowTotal(e.target, studentName, subject);
+        }
+
+        // Save all results for a student
+        function saveStudentResults(studentName, term) {
+            console.log('========== SAVING RESULTS ==========');
+            console.log('Student name:', studentName);
+            console.log('Term:', term);
+
+            const student = allStudents.find(s => s.name === studentName);
+
+            if (!student) {
+                console.error('Student not found:', studentName);
+                showInputWarning(`Student ${studentName} not found in database`);
+                return;
+            }
+
+            console.log('Found student:', student);
+
+            const studentSubjects = getSubjectsForClass(student.class);
+            console.log('Subjects for this class:', studentSubjects);
+
+            let savedCount = 0;
+            let newResults = [];
+
+            studentSubjects.forEach(subject => {
+                const projectInput = document.querySelector(`.project-input[data-student="${studentName}"][data-subject="${subject}"]`);
+                const testInput = document.querySelector(`.test-input[data-student="${studentName}"][data-subject="${subject}"]`);
+                const examInput = document.querySelector(`.exam-input[data-student="${studentName}"][data-subject="${subject}"]`);
+
+                if (projectInput && testInput && examInput) {
+                    const project = parseFloat(projectInput.value) || 0;
+                    const test = parseFloat(testInput.value) || 0;
+                    const exam = parseFloat(examInput.value) || 0;
+
+                    // Only save if at least one score is entered
+                    if (project > 0 || test > 0 || exam > 0) {
+                        const total = project + test + exam;
+                        const grade = calculateGrade(total);
+
+                        const result = {
+                            studentName: studentName,
+                            studentClass: student.class,
+                            subject: subject,
+                            term: term,
+                            project: project,
+                            test: test,
+                            exam: exam,
+                            total: total,
+                            grade: grade,
+                            date: new Date().toISOString()
+                        };
+
+                        newResults.push(result);
+                        savedCount++;
+                    }
+                }
+            });
+
+            // Remove old results for this student and term
+            results = results.filter(r => !(r.studentName === studentName && r.term === term));
+
+            // Add new results
+            results = [...results, ...newResults];
+
+            console.log('Updated results array:', results);
+            console.log('Total results now:', results.length);
+
+            // Save to localStorage
+            localStorage.setItem('teacherResults', JSON.stringify(results));
+            console.log('Saved to localStorage. Verification:', localStorage.getItem('teacherResults'));
+
+            // Double-check that it saved
+            const check = localStorage.getItem('teacherResults');
+            if (check) {
+                console.log('✅ Verification successful! Results saved.');
+            } else {
+                console.error('❌ Failed to save to localStorage!');
+                alert('ERROR: Could not save results to browser storage. Please check your browser settings.');
+            }
+
+            // Trigger storage event for other tabs/windows
+            window.dispatchEvent(new Event('storage'));
+
+            calculateOverallTotals(studentName);
+            loadViewResults();
+
+            showSuccessMessage(`Successfully saved ${savedCount} subjects for ${studentName} (${term})`);
+        }
+
+        // Save all results for all students
+        function saveAllResults() {
+            const container = document.getElementById('student-results-container');
+            const studentTables = container.querySelectorAll('.content-card');
+            let totalSaved = 0;
+            const term = document.getElementById('term-select').value;
+
+            // Clear existing results for this term across all students
+            results = results.filter(r => r.term !== term);
+
+            studentTables.forEach(table => {
+                const headerText = table.querySelector('h4').textContent;
+                const studentName = headerText.split(' - ')[0].replace('🎓 ', '');
+                const student = allStudents.find(s => s.name === studentName);
+
+                if (!student) {
+                    console.warn('Student not found:', studentName);
+                    return;
+                }
+
+                const studentSubjects = getSubjectsForClass(student.class);
+
+                studentSubjects.forEach(subject => {
+                    const projectInput = table.querySelector(`.project-input[data-student="${studentName}"][data-subject="${subject}"]`);
+                    const testInput = table.querySelector(`.test-input[data-student="${studentName}"][data-subject="${subject}"]`);
+                    const examInput = table.querySelector(`.exam-input[data-student="${studentName}"][data-subject="${subject}"]`);
+
+                    if (projectInput && testInput && examInput) {
+                        const project = parseFloat(projectInput.value) || 0;
+                        const test = parseFloat(testInput.value) || 0;
+                        const exam = parseFloat(examInput.value) || 0;
+
+                        if (project > 0 || test > 0 || exam > 0) {
+                            const total = project + test + exam;
+                            const grade = calculateGrade(total);
+
+                            const result = {
+                                studentName: studentName,
+                                studentClass: student.class,
+                                subject: subject,
+                                term: term,
+                                project: project,
+                                test: test,
+                                exam: exam,
+                                total: total,
+                                grade: grade,
+                                date: new Date().toISOString()
+                            };
+
+                            results.push(result);
+                            totalSaved++;
+                        }
+                    }
+                });
+
+                calculateOverallTotals(studentName);
+            });
+
+            localStorage.setItem('teacherResults', JSON.stringify(results));
+
+            // Trigger storage event
+            window.dispatchEvent(new Event('storage'));
+
+            loadViewResults();
+
+            showSuccessMessage(`Successfully saved ${totalSaved} subject entries across all students`);
+        }
+
+        // Show success message
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'alert alert-success';
+            successDiv.style.position = 'fixed';
+            successDiv.style.top = '20px';
+            successDiv.style.right = '20px';
+            successDiv.style.zIndex = '9999';
+            successDiv.style.padding = '15px 25px';
+            successDiv.style.borderRadius = '5px';
+            successDiv.style.backgroundColor = '#d4edda';
+            successDiv.style.color = '#155724';
+            successDiv.style.border = '1px solid #c3e6cb';
+            successDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+
+            document.body.appendChild(successDiv);
+
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        // Test storage function
+        function testStorage() {
+            const testData = [{ test: 'data', time: new Date().toISOString() }];
+            localStorage.setItem('testKey', JSON.stringify(testData));
+            const retrieved = localStorage.getItem('testKey');
+
+            if (retrieved) {
+                alert('✅ localStorage is working! Test data saved and retrieved.');
+                console.log('Test successful:', JSON.parse(retrieved));
+            } else {
+                alert('❌ localStorage is NOT working! Please check browser settings.');
+            }
+
+            // Also show current results
+            console.log('Current results in memory:', results);
+            console.log('Current results in storage:', localStorage.getItem('teacherResults'));
+        }
+
+        // Clear all inputs
+        function clearAllInputs() {
+            if (confirm('Clear all input fields for all students?')) {
+                document.querySelectorAll('.project-input, .test-input, .exam-input').forEach(input => {
+                    input.value = '';
+                });
+
+                document.querySelectorAll('[class*="subject-total-"]').forEach(cell => {
+                    cell.textContent = '-';
+                });
+
+                document.querySelectorAll('[class*="subject-grade-"]').forEach(cell => {
+                    cell.innerHTML = '-';
+                });
+
+                document.querySelectorAll('[id^="overall-total-"], [id^="overall-avg-"], [id^="overall-grade-"]').forEach(cell => {
+                    if (cell.id.includes('total')) cell.textContent = '-';
+                    if (cell.id.includes('avg')) cell.textContent = '-';
+                    if (cell.id.includes('grade')) cell.innerHTML = '-';
+                });
+            }
+        }
+
+        // ==================== VIEW RESULTS ====================
+        function loadViewResults() {
+            const tbody = document.getElementById('view-results-tbody');
+            const classFilter = document.getElementById('view-class-filter')?.value || '';
+            const termFilter = document.getElementById('view-term-filter')?.value || '';
+            const searchText = document.getElementById('view-search')?.value.toLowerCase() || '';
+
+            let filteredResults = results.filter(r => currentTeacher && currentTeacher.classes.includes(r.studentClass));
+
+            if (classFilter) {
+                filteredResults = filteredResults.filter(r => r.studentClass === classFilter);
+            }
+
+            if (termFilter) {
+                filteredResults = filteredResults.filter(r => r.term === termFilter);
+            }
+
+            if (searchText) {
+                filteredResults = filteredResults.filter(r =>
+                    r.studentName.toLowerCase().includes(searchText)
+                );
+            }
+
+            if (filteredResults.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">No results found</td></tr>';
+                document.getElementById('summary-cards').innerHTML = '';
+                document.getElementById('summary-footer').innerHTML = '';
+                return;
+            }
+
+            // Results table
+            tbody.innerHTML = filteredResults.map(r => `
+                <tr>
+                    <td>${r.studentName}</td>
+                    <td>${r.studentClass}</td>
+                    <td>${r.subject}</td>
+                    <td>${r.project}</td>
+                    <td>${r.test}</td>
+                    <td>${r.exam}</td>
+                    <td><strong>${r.total}</strong></td>
+                    <td><span class="grade-badge grade-${r.grade.toLowerCase()}">${r.grade}</span></td>
+                    <td>${r.term}</td>
+                    <td>
+                        <button class="action-btn edit" onclick="editResult('${r.studentName}', '${r.subject}', '${r.term}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="deleteResult('${r.studentName}', '${r.subject}', '${r.term}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Summary cards
+            generateSummaryCards(filteredResults);
+
+            // Summary footer
+            generateSummaryFooter(filteredResults);
+        }
+
+        function generateSummaryCards(results) {
+            const container = document.getElementById('summary-cards');
+
+            // Group by student
+            const studentGroups = {};
+            results.forEach(r => {
+                if (!studentGroups[r.studentName]) {
+                    studentGroups[r.studentName] = {
+                        name: r.studentName,
+                        class: r.studentClass,
+                        totals: []
+                    };
+                }
+                studentGroups[r.studentName].totals.push(r.total);
+            });
+
+            container.innerHTML = Object.values(studentGroups).map(s => {
+                const average = s.totals.reduce((a, b) => a + b, 0) / s.totals.length;
+                const averageGrade = calculateGrade(average);
+
+                return `
+                    <div class="dashboard-card" style="padding: 15px;">
+                        <i class="fas fa-user-graduate"></i>
+                        <h4>${s.name}</h4>
+                        <p>${s.class}</p>
+                        <div style="margin-top: 10px;">
+                            <strong>Average:</strong> ${average.toFixed(1)}%
+                            <br>
+                            <span class="grade-badge grade-${averageGrade.toLowerCase()}">${averageGrade}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function generateSummaryFooter(results) {
+            const footer = document.getElementById('summary-footer');
+
+            const classAverages = {};
+            results.forEach(r => {
+                if (!classAverages[r.studentClass]) {
+                    classAverages[r.studentClass] = { totals: [], students: new Set() };
+                }
+                classAverages[r.studentClass].totals.push(r.total);
+                classAverages[r.studentClass].students.add(r.studentName);
+            });
+
+            let footerHTML = '<tr><td colspan="10" style="padding: 15px;">';
+
+            for (const [className, data] of Object.entries(classAverages)) {
+                const avg = data.totals.reduce((a, b) => a + b, 0) / data.totals.length;
+                const grade = calculateGrade(avg);
+
+                footerHTML += `
+                    <div style="margin: 5px 0; padding: 10px; background: #e8f4fc; border-radius: 5px;">
+                        <strong>${className}:</strong>
+                        Average: ${avg.toFixed(1)}%
+                        <span class="grade-badge grade-${grade.toLowerCase()}">${grade}</span>
+                        (${data.students.size} students, ${data.totals.length} subjects)
+                    </div>
+                `;
+            }
+
+            // Overall average
+            const allTotals = results.map(r => r.total);
+            const overallAvg = allTotals.reduce((a, b) => a + b, 0) / allTotals.length;
+            const overallGrade = calculateGrade(overallAvg);
+
+            footerHTML += `
+                <div style="margin-top: 15px; padding: 15px; background: var(--primary); color: white; border-radius: 5px;">
+                    <strong>OVERALL SCHOOL AVERAGE:</strong> ${overallAvg.toFixed(1)}%
+                    <span class="grade-badge grade-${overallGrade.toLowerCase()}">${overallGrade}</span>
+                </div>
+            `;
+
+            footerHTML += '</td></tr>';
+            footer.innerHTML = footerHTML;
+        }
+
+        // ==================== EDIT/DELETE RESULTS ====================
+        function editResult(studentName, subject, term) {
+            showSection(new Event('click'), 'enter-results');
+
+            document.getElementById('student-search').value = studentName;
+            const student = allStudents.find(s => s.name === studentName);
+            if (student) {
+                document.getElementById('class-filter').value = student.class;
+            }
+            document.getElementById('term-select').value = term;
+
+            loadResultEntryTable();
+        }
+
+        function deleteResult(studentName, subject, term) {
+            if (confirm(`Delete result for ${studentName} - ${subject} (${term})?`)) {
+                results = results.filter(r =>
+                    !(r.studentName === studentName && r.subject === subject && r.term === term)
+                );
+
+                localStorage.setItem('teacherResults', JSON.stringify(results));
+                loadViewResults();
+                loadResultEntryTable();
+
+                showSuccessMessage('Result deleted successfully');
+            }
+        }
+
+        // ==================== STUDENTS LIST ====================
+        function loadStudentsList() {
+            const tbody = document.getElementById('students-tbody');
+            const teacherStudents = allStudents.filter(s => currentTeacher.classes.includes(s.class));
+            const classFilter = document.getElementById('student-class-filter')?.value || '';
+            const searchText = document.getElementById('student-list-search')?.value.toLowerCase() || '';
+
+            let filteredStudents = teacherStudents;
+
+            if (classFilter) {
+                filteredStudents = filteredStudents.filter(s => s.class === classFilter);
+            }
+
+            if (searchText) {
+                filteredStudents = filteredStudents.filter(s => s.name.toLowerCase().includes(searchText));
+            }
+
+            tbody.innerHTML = filteredStudents.map(s => `
+                <tr>
+                    <td>${s.id}</td>
+                    <td>${s.name}</td>
+                    <td>${s.class}</td>
+                    <td>${s.parent}</td>
+                    <td>${s.phone}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="enterResultForStudent('${s.name}')">
+                            <i class="fas fa-pen"></i> Enter Result
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function enterResultForStudent(studentName) {
+            showSection(new Event('click'), 'enter-results');
+            document.getElementById('student-search').value = studentName;
+            loadResultEntryTable();
+        }
+
+        // ==================== REPORTS ====================
+        function generateReport() {
+            alert('📄 Report generation feature coming soon!');
+        }
+
+        // ==================== SECTION MANAGEMENT ====================
+        function showSection(event, sectionId) {
+            document.querySelectorAll('.portal-nav a').forEach(link => link.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            document.getElementById(sectionId + '-section').style.display = 'block';
+
+            // Refresh data when switching to certain sections
+            if (sectionId === 'enter-results') {
+                loadResultEntryTable();
+            } else if (sectionId === 'manage-results') {
+                loadViewResults();
+            } else if (sectionId === 'my-students') {
+                loadStudentsList();
+            } else if (sectionId === 'psychomotor') {
+                loadPsychomotorTable();
+            }
+        }
+
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('currentTeacher');
+                window.location.href = '/teacher-login';
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initTeacherDashboard();
+        });
+
+        document.getElementById('student-search')?.addEventListener('keyup', loadResultEntryTable);
+        document.getElementById('class-filter')?.addEventListener('change', loadResultEntryTable);
+        document.getElementById('term-select')?.addEventListener('change', loadResultEntryTable);
+
+        document.getElementById('view-search')?.addEventListener('keyup', loadViewResults);
+        document.getElementById('view-class-filter')?.addEventListener('change', loadViewResults);
+        document.getElementById('view-term-filter')?.addEventListener('change', loadViewResults);
+
+        document.getElementById('student-list-search')?.addEventListener('keyup', loadStudentsList);
+        document.getElementById('student-class-filter')?.addEventListener('change', loadStudentsList);
+
+        // Psychomotor filter event listeners
+        document.getElementById('psycho-student-search')?.addEventListener('keyup', loadPsychomotorTable);
+        document.getElementById('psycho-class-filter')?.addEventListener('change', loadPsychomotorTable);
+        document.getElementById('psycho-term-select')?.addEventListener('change', loadPsychomotorTable);
+
+        // ==================== DEBUG FUNCTIONS ====================
+        window.showSavedResults = function() {
+            console.log('========== TEACHER DASHBOARD DEBUG ==========');
+            console.log('All results in storage:', results);
+            console.log('Results for Sarah Johnson:', results.filter(r => r.studentName === 'Sarah Johnson'));
+            console.log('Total results:', results.length);
+            alert(`Total results: ${results.length}\nCheck console for details (F12)`);
+        };
+
+        window.checkSarahResults = function() {
+            const sarahResults = results.filter(r => r.studentName === 'Sarah Johnson');
+            console.log('Sarah Johnson results:', sarahResults);
+            if (sarahResults.length > 0) {
+                alert(`Found ${sarahResults.length} results for Sarah Johnson`);
+            } else {
+                alert('No results found for Sarah Johnson');
+            }
+        };
+
+        window.clearAllResults = function() {
+            if (confirm('Clear ALL results from storage?')) {
+                results = [];
+                localStorage.removeItem('teacherResults');
+                localStorage.removeItem('studentResults');
+                loadResultEntryTable();
+                loadViewResults();
+                alert('All results cleared');
+            }
+        };
+
+        // Press F8 to show saved results
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F8') {
+                window.showSavedResults();
+            }
+            if (e.key === 'F9') {
+                window.checkSarahResults();
+            }
+        });
+    </script>
+</body>
+</html>

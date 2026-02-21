@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .portal-container {
+            display: flex;
+            min-height: 500px;
+            margin: 50px 0;
+        }
+
+        .portal-sidebar {
+            width: 300px;
+            background: var(--primary);
+            color: white;
+            border-radius: 10px 0 0 10px;
+            padding: 30px;
+        }
+
+        .portal-content {
+            flex: 1;
+            background: white;
+            border-radius: 0 10px 10px 0;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .portal-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .portal-nav li {
+            margin-bottom: 10px;
+        }
+
+        .portal-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .portal-nav a:hover, .portal-nav a.active {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .login-form .form-group {
+            text-align: left;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-pic i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .profile-details h3 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .teacher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .teacher-card {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .teacher-card:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .teacher-card i {
+            font-size: 24px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .teacher-card:hover i {
+            color: white;
+        }
+
+        /* Admin section styling */
+        .admin-login-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .admin-login-section h3 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-login-section p {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .admin-login-section .form-group {
+            margin-bottom: 15px;
+        }
+
+        .admin-login-section button {
+            width: 100%;
+            padding: 12px;
+        }
+
+        /* Password visibility toggle */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper input {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #95a5a6;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+
+        .toggle-password:hover {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .portal-container {
+                flex-direction: column;
+            }
+
+            .portal-sidebar {
+                width: 100%;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .portal-content {
+                border-radius: 0 0 10px 10px;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <img src="images/hephzibah.png" alt="School Logo" height="60">
+            </a>
+        </div>
+
+        <!-- Top Header -->
+        <div class="width-100 top-header">
+            <div class="container">
+                <div class="width-100">
+                    <b class="new-list"><i class="fas fa-chalkboard-teacher"></i> TEACHER PORTAL :</b>
+                    <marquee class="headquote">
+                        Staff Login - For Faculty Use Only
+                    </marquee>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="width-100 header-menu">
+            <div class="container">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <ul class="main-menu" id="main-menu">
+                    <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                    <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+                    <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+                    <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                    <li><a href="/teacher-login" class="active"><i class="fas fa-chalkboard-teacher"></i> Teacher</a></li>
+                    <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/teacher-bg.jpg'); min-height: 200px; padding: 60px 0;">
+            <div class="container">
+                <h1>Teacher Portal</h1>
+                <p>Access your dashboard to manage students and grades</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="width-100 padding-50">
+            <div class="container">
+                <div class="portal-container">
+                    <!-- Sidebar -->
+                    <div class="portal-sidebar">
+                        <h3 style="margin-bottom: 30px; text-align: center;">Staff Portal</h3>
+                        <ul class="portal-nav">
+                            <li><a href="#" class="active"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                            <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                        </ul>
+
+                        <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                            <h4 style="color: white; margin-bottom: 10px;">Quick Access</h4>
+                            <div class="teacher-grid" id="quick-teacher-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="portal-content">
+                        <div class="login-form">
+                            <h2><i class="fas fa-chalkboard-teacher"></i> Staff Login</h2>
+                            <p>Enter your credentials to access your dashboard</p>
+
+                            <form id="teacher-login-form">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><i class="fas fa-lock"></i> Password</label>
+                                    <div class="password-wrapper">
+                                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                        <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <a href="#" class="forgot-password">Forgot Password?</a>
+                                </div>
+
+                                <div class="form-check" style="text-align: left; margin: 20px 0;">
+                                    <input type="checkbox" class="form-check-input" id="remember-me">
+                                    <label class="form-check-label" for="remember-me">Remember me</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;" id="login-btn">
+                                    <i class="fas fa-sign-in-alt"></i> Login to Portal
+                                </button>
+                            </form>
+
+                            <!-- Admin Login Section - Separated from Staff Login -->
+                            <div class="admin-login-section">
+                                <h3><i class="fas fa-user-shield"></i> Admin Verification</h3>
+                                <p>For payment verification only</p>
+
+                                <form id="admin-login-form">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-key"></i> Admin Code</label>
+                                        <input type="password" class="form-control" id="admin-code" placeholder="Enter admin code" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="background: var(--accent);">
+                                        <i class="fas fa-shield-alt"></i> Access Admin Panel
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="width-100 footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Teacher Support</h3>
+                        <ul class="footer-links">
+                            <li><i class="fas fa-phone"></i> +234 808 675 0620</li>
+                            <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                            <li><i class="fas fa-clock"></i> Mon-Thu: 8 AM - 2 PM Fri: 8 AM - 1 PM</li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                            <li><a href="/portal"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Security</h3>
+                        <ul class="footer-links">
+                            <li><i class="fas fa-shield-alt"></i> Secure Login</li>
+                            <li><i class="fas fa-lock"></i> Encrypted Data</li>
+                            <li><i class="fas fa-history"></i> Session Timeout: 30min</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>© 2026 Hephzibah Vics Montessori - Teacher Portal. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        // ==================== ADMIN LOGIN ====================
+        const ADMIN_CODE = "hephzibah2026"; // Change this to your secure code
+
+        // Make sure the admin login form exists before adding event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminForm = document.getElementById('admin-login-form');
+            if (adminForm) {
+                adminForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const code = document.getElementById('admin-code').value;
+
+                    if (code === ADMIN_CODE) {
+                        sessionStorage.setItem('isAdmin', 'true');
+                        // Use relative path without leading slash for local development
+                        window.location.href = 'admin-verification.html';
+                    } else {
+                        alert('❌ Invalid admin code');
+                    }
+                });
+            }
+
+            // Initialize quick teacher list
+            populateQuickTeacherList();
+        });
+
+        // ==================== PASSWORD TOGGLE ====================
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // ==================== TEACHER DATA ====================
+        const teachers = [
+            {
+                id: 1,
+                username: "mrs_igwe",
+                password: "igwe123",
+                name: "Mrs. Igwe",
+                title: "Teacher",
+                classes: ["Lily"],
+                subjects: ["Mathematics", "General Studies"],
+                email: "igwe@hephzibah.edu",
+                phone: "+234 801 234 5678"
+            },
+            {
+                id: 2,
+                username: "mrs_eromonsele",
+                password: "eromonsele123",
+                name: "Mrs. Eromonsele",
+                title: "Teacher",
+                classes: ["Buttercup"],
+                subjects: ["Mathematics", "General Studies"],
+                email: "eromonsele@hephzibah.edu",
+                phone: "+234 801 234 5678"
+            },
+            {
+                id: 3,
+                username: "mrs_odjoh",
+                password: "odjoh123",
+                name: "Mrs. Odjoh",
+                title: "Teacher",
+                classes: ["Infant foundation 1"],
+                subjects: ["Montessori Method", "Practical Life"],
+                email: "odjoh@hephzibah.edu",
+                phone: "+234 802 345 6789"
+            },
+            {
+                id: 4,
+                username: "mrs_warrens",
+                password: "warrens123",
+                name: "Mrs. Charity Warrens",
+                title: "Head Mistress",
+                classes: ["Infant foundation 2"],
+                subjects: ["English", "Science"],
+                email: "warrens@hephzibah.edu",
+                phone: "+234 803 456 7890"
+            },
+            {
+                id: 5,
+                username: "mr_solomon",
+                password: "solomon123",
+                name: "Mr. Solomon Ubom",
+                title: "Teacher",
+                classes: ["Grade 1a"],
+                subjects: ["Civic Education"],
+                email: "solomon@hephzibah.edu",
+                phone: "+234 804 567 8901"
+            },
+            {
+                id: 6,
+                username: "mrs_olusuno",
+                password: "olusuno123",
+                name: "Mrs. Olusuno",
+                title: "Teacher",
+                classes: ["Grade 1b"],
+                subjects: ["Sensorial", "Language"],
+                email: "olusuno@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 7,
+                username: "mrs_peters",
+                password: "peters123",
+                name: "Mrs. Peters",
+                title: "Teacher",
+                classes: ["Grade 2"],
+                subjects: ["Sensorial", "Language"],
+                email: "peters@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 8,
+                username: "mrs_adesuwa",
+                password: "adesuwa123",
+                name: "Mrs. Adesuwa",
+                title: "Teacher",
+                classes: ["Grade 3"],
+                subjects: ["Sensorial", "Language"],
+                email: "adesuwa@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 9,
+                username: "mr_p",
+                password: "pere123",
+                name: "Mr. Pere",
+                title: "Teacher",
+                classes: ["Grade 4"],
+                subjects: ["Mathematics", "Social Studies"],
+                email: "pere@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 10,
+                username: "mrs_daniels",
+                password: "daniels123",
+                name: "Mrs. Daniels",
+                title: "Teacher",
+                classes: ["Grade 5"],
+                subjects: ["Literacy"],
+                email: "daniels@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 11,
+                username: "mrs_cynthia",
+                password: "cynthia123",
+                name: "Mrs. Cynthia",
+                title: "Teacher",
+                classes: ["JSS 1"],
+                subjects: ["Literacy", "Language"],
+                email: "cynthia@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            },
+            {
+                id: 12,
+                username: "mr_john",
+                password: "john123",
+                name: "Mr. John Okon",
+                title: "Teacher",
+                classes: ["JSS 2"],
+                subjects: ["Sensorial", "Language"],
+                email: "john@hephzibah.edu",
+                phone: "+234 805 678 9012"
+            }
+        ];
+
+        // ==================== CLASSES DATA ====================
+        const classes = [
+            { id: 1, name: "Lily", teacher_id: 1 },
+            { id: 2, name: "Buttercup", teacher_id: 2 },
+            { id: 3, name: "Infant foundation 1", teacher_id: 3 },
+            { id: 4, name: "Infant foundation 2", teacher_id: 4 },
+            { id: 5, name: "Grade 1a", teacher_id: 5 },
+            { id: 6, name: "Grade 1b", teacher_id: 6 },
+            { id: 7, name: "Grade 2", teacher_id: 7 },
+            { id: 8, name: "Grade 3", teacher_id: 8 },
+            { id: 9, name: "Grade 4", teacher_id: 9 },
+            { id: 10, name: "Grade 5", teacher_id: 10 },
+            { id: 11, name: "JSS 1", teacher_id: 11 },
+            { id: 12, name: "JSS 2", teacher_id: 12 }
+        ];
+
+        // ==================== POPULATE QUICK TEACHER LIST ====================
+        function populateQuickTeacherList() {
+            const container = document.getElementById('quick-teacher-list');
+            if (!container) return;
+
+            container.innerHTML = teachers.map(teacher => `
+                <div class="teacher-card" onclick="fillLogin('${teacher.username}', '${teacher.password}')">
+                    <i class="fas fa-user-tie"></i>
+                    <div style="font-size: 12px;">${teacher.name}</div>
+                    <div style="font-size: 10px; opacity: 0.8;">${teacher.classes[0]}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== FILL LOGIN FORM ====================
+        function fillLogin(username, password) {
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+        }
+
+        // ==================== TEACHER LOGIN ====================
+        document.getElementById('teacher-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('login-btn');
+
+            // Show loading state
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            loginBtn.disabled = true;
+
+            // Find teacher in our database
+            const teacher = teachers.find(t => t.username === username && t.password === password);
+
+            if (teacher) {
+                // Store teacher info in session
+                sessionStorage.setItem('currentTeacher', JSON.stringify(teacher));
+
+                // Also store classes for this teacher
+                const teacherClasses = classes.filter(c => c.teacher_id === teacher.id);
+                sessionStorage.setItem('teacherClasses', JSON.stringify(teacherClasses));
+
+                // Show success message
+                alert(`✅ Welcome back, ${teacher.name}! Redirecting to your dashboard...`);
+
+                // Redirect to teacher dashboard
+                window.location.href = '/teacher-dashboard';
+            } else {
+                alert('❌ Invalid username or password. Please try again.');
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .contact-form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        .office-hours {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .department-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .department-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .emergency-contact {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .emergency-contact h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .emergency-contact .phone {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 15px 20px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-container">
+        <a href="/home" class="logo">
+            <a href="/"><img src="images/hephzibah.png" alt="School Logo" height="60"></a>
+        </a>
+        
+    </div>
+
+    <!-- Top Header -->
+    <div class="width-100 top-header">
+        <div class="container">
+            <div class="width-100">
+                <b class="new-list"><i class="fas fa-bullhorn"></i> CONTACT :</b>
+                <marquee class="headquote" id="header-news">
+                    Contact our admissions office at +234 808 657 0620 | Email: hephzibahvics@gmail.com
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="width-100 header-menu">
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="main-menu" id="main-menu">
+                <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+                <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+                <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                <li><a href="/contact" class="active"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/contact-bg.jpg'); min-height: 300px; padding: 80px 0;">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>Get in touch with our team. We're here to help!</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="width-100 padding-50">
+        <div class="container">
+            <!-- Contact Information Cards -->
+            <div class="width-100 margin-bottom-50">
+                <div class="width-33">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Visit Our Campus</h3>
+                        <p>3 Rotitmi Avenue off Evbuabogun road, Sapele road<br>
+                           Benin City, Edo state<br>
+                           Nigeria</p>
+                        <div style="margin-top: 20px;">
+                            <a href="#map" class="btn btn-primary btn-sm">
+                                <i class="fas fa-directions"></i> Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Call Us</h3>
+                        <p><strong>Main Office:</strong> +234 808 675-0620</p>
+                        <p><strong>Admissions:</strong> +234 808 675-0620</p>
+                        <p><strong>Fax:</strong></p>
+                        <div style="margin-top: 20px;">
+                            <a href="tel:+2348086750620" class="btn btn-primary btn-sm">
+                                <i class="fas fa-phone"></i> Call Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email Us</h3>
+                        <p><strong>General Inquiries:</strong> hephzibahvics@gmail.com</p>
+                        <p><strong>Admissions:</strong> hephzibahvics@gmail.com</p>
+                        <p><strong>Support:</strong> hephzibahvics@gmail.com</p>
+                        <div style="margin-top: 20px;">
+                            <a href="mailto:hephzibahvis@gmail.com" class="btn btn-primary btn-sm">
+                                <i class="fas fa-paper-plane"></i> Send Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <!-- Contact Form and Map -->
+            <div class="width-100">
+                <div class="width-60">
+                    <div class="contact-form-container">
+                        <h2>Send Us a Message</h2>
+                        <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+
+                        <form id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">Your Name</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="required">Email Address</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">Phone Number</label>
+                                    <input type="tel" class="form-control" name="phone" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <select class="form-control" name="subject">
+                                        <option value="">Select Subject</option>
+                                        <option value="admission">Admission Inquiry</option>
+                                        <option value="academic">Academic Questions</option>
+                                        <option value="fee">Fee Related</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="required">Your Message</label>
+                                <textarea class="form-control" name="message" rows="6" required></textarea>
+                            </div>
+
+                            <div style="margin: 20px 0;">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="newsletter">
+                                    <label class="form-check-label" for="newsletter">
+                                        Subscribe to our newsletter for updates and announcements
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="width-40">
+                    <div class="contact-info-card">
+                        <h3>Office Hours</h3>
+                        <div class="office-hours">
+                            <p><strong>Monday - Friday:</strong> 8:00 AM - 1:00 PM</p>
+                            <p><strong>Saturday:</strong> Closed</p>
+                            <p><strong>Sunday:</strong> Closed</p>
+                        </div>
+
+                        <h3 style="margin-top: 30px;">Departments</h3>
+                        <ul class="department-list">
+                            <li>
+                                <span>Admissions Office</span>
+                                <span>School Premesis</span>
+                            </li>
+                            <li>
+                                <span>Principal's Office</span>
+                                <span>School Premesis</span>
+                            </li>
+                            <li>
+                                <span>Accounts Department</span>
+                                <span>School Premesis</span>
+                            </li>
+                            <li>
+                                <span>Transport Office</span>
+                                <span>School Premesis</span>
+                            </li>
+                            <li>
+                                <span>IT Support</span>
+                                <span>School Premesis</span>
+                            </li>
+                        </ul>
+
+                        <div class="emergency-contact">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Emergency Contact</h4>
+                            <div class="phone">+234 815 557 1047</div>
+                            <p>Available 24/7 for urgent school-related matters</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <!-- Map -->
+            <div class="width-100" id="map">
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316cd174e5%3A0x8b2e3b3b3b3b3b3b!2s123%20Education%20St%2C%20New%20York%2C%20NY%2010001!5e0!3m2!1sen!2sus!4v1612345678901!5m2!1sen!2sus"
+                            allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="width-100 text-center margin-top-50">
+                <h2>Connect With Us</h2>
+                <p>Follow us on social media for the latest updates</p>
+
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="width-100 margin-top-50">
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Quick answers to common questions</p>
+                </div>
+
+                <div class="width-100">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What are your school hours?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Regular school hours are from 8:30 AM to 3:00 PM, Monday through Friday. Extended care is available from 7:30 AM to 6:00 PM for working parents.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do you offer transportation services?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer safe and reliable transportation services covering most areas in the city. Our buses are equipped with GPS tracking and safety belts.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What is the teacher-student ratio?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We maintain a low teacher-student ratio of 1:8 for Toddler Program, 1:10 for Primary Program, and 1:12 for Elementary Program to ensure personalized attention.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do you have after-school programs?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer a variety of after-school programs including sports, music, dance, art, STEM activities, and homework assistance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="width-100 footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 3 Rotimi Street, off Evbuabogun road, Sapele road, Edo state, Nigeria</li>
+                        <li><i class="fas fa-phone"></i> +234 815 557 1047, +234 808 657 0620, +234 703 122 2500</li>
+                        <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Thu: 7:00 AM - 2:30 PM, Fri: 7:00 AM - 1:00 PM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="/about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="/admission"><i class="fas fa-chevron-right"></i> Admission</a></li>
+                        <li><a href="/portal"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Departments</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:admissions@hephzibah.edu"><i class="fas fa-envelope"></i> Admissions</a></li>
+                        <li><a href="mailto:accounts@hephzibah.edu"><i class="fas fa-envelope"></i> Accounts</a></li>
+                        <li><a href="mailto:transport@hephzibah.edu"><i class="fas fa-envelope"></i> Transport</a></li>
+                        <li><a href="mailto:support@hephzibah.edu"><i class="fas fa-envelope"></i> IT Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Hephzibah Vics Montessori. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+    <div id="nav-placeholder"></div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // In a real implementation, you would send this to your backend
+            console.log('Contact form submitted:', data);
+
+            // Show success message
+            alert('Thank you for your message! We have received your inquiry and will respond within 24-48 hours.');
+
+            // Reset form
+            this.reset();
+        });
+
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Initialize map interaction
+        document.querySelectorAll('a[href="#map"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('map').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        fetch('http://localhost:5000/api/dashboard')
+        // Load navigation
+    fetch('/includes/nav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+
+            // Highlight current page in navigation
+            const currentPage = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

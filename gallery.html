@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gallery-filter {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .filter-btn {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 5px 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44, 62, 80, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .video-gallery {
+            margin-top: 50px;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-caption {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <img src="images/hephzibah.png" alt="School Logo" height="60">
+        </a>
+    </div>
+
+    <!-- Top Header -->
+    <div class="width-100 top-header">
+        <div class="container">
+            <div class="width-100">
+                <b class="new-list"><i class="fas fa-bullhorn"></i> GALLERY :</b>
+                <marquee class="headquote" id="header-news">
+                    Check out our latest school events and activities in the photo gallery
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="width-100 header-menu">
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="main-menu" id="main-menu">
+                <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+                <li><a href="/gallery" class="active"><i class="fas fa-images"></i> Gallery</a></li>
+                <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/gallery-bg.jpg'); min-height: 300px; padding: 80px 0;">
+        <div class="container">
+            <h1>School Gallery</h1>
+            <p>Capturing moments of learning, growth, and joy at Hephzibah Vics Montessori</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="width-100 padding-50">
+        <div class="container">
+            <!-- Gallery Filter -->
+            <div class="width-100 margin-bottom-50">
+                <div class="gallery-filter">
+                    <button class="filter-btn active" data-filter="all">All Photos</button>
+                    <button class="filter-btn" data-filter="campus">Campus</button>
+                    <button class="filter-btn" data-filter="classroom">Classrooms</button>
+                    <button class="filter-btn" data-filter="events">Events</button>
+                    <button class="filter-btn" data-filter="sports">Sports</button>
+                    <button class="filter-btn" data-filter="activities">Activities</button>
+                    <button class="filter-btn" data-filter="graduation">Graduation</button>
+                </div>
+            </div>
+
+            <!-- Photo Gallery -->
+            <div class="width-100" id="photo-gallery">
+                <!-- Existing Gallery Items -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="campus">
+                        <img src="images/gallery/campus1.jpg" alt="School Building"
+                             onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Main Campus Building</h4>
+                                <p>Our beautiful school building with Montessori classrooms</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="classroom">
+                        <img src="images/gallery/classroom1.jpg" alt="Montessori Classroom"
+                             onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Montessori Classroom</h4>
+                                <p>Prepared environment with authentic Montessori materials</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/ART3.jpg" alt="Art Activity"
+                             onerror="this.src='https://images.unsplash.com/photo-1541692641319-981cc79ee10a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Art & Craft Session</h4>
+                                <p>Children engaged in creative art activities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/ART1.jpg" alt="Art Activity"
+                             onerror="this.src='https://images.unsplash.com/photo-1541692641319-981cc79ee10a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Art & Craft Session</h4>
+                                <p>Children engaged in creative art activities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Robotics - All under ACTIVITIES category -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Robotics4.jpg" alt="Robotics Club"
+                             onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Robotics Workshop</h4>
+                                <p>Students building and programming robots</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Robotics2.jpg" alt="Robot lessons"
+                             onerror="this.src='https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Robotics Classes</h4>
+                                <p>Making an automated heat sensor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Coding - All under ACTIVITIES category -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Coding1.jpg" alt="Coding Club"
+                             onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Coding Session</h4>
+                                <p>Learning programming fundamentals with blocks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Coding2.jpg" alt="Coding Projects"
+                             onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Student Projects</h4>
+                                <p>Showcasing coding projects with scratch for kids</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Home Makers - All under ACTIVITIES category -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/HOME1.jpg" alt="Home Makers Club"
+                             onerror="this.src='https://images.unsplash.com/photo-1556911220-bda9b7a7595e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Cooking Class</h4>
+                                <p>Learning basic cooking and kitchen skills</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/HOME.jpg" alt="Cooking class"
+                             onerror="this.src='https://images.unsplash.com/photo-1581092921461-39b9c08a9b1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Home Makers</h4>
+                                <p>Learning basic cooking and kitchen skills</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: ICT - All under ACTIVITIES category -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/ICT1.jpg" alt="ICT club"
+                             onerror="this.src='https://images.unsplash.com/photo-1581092921461-39b9c08a9b1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Computer Lab</h4>
+                                <p>Students working on ICT projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Robotics6.jpg" alt="Digital Learning"
+                             onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Digital Literacy</h4>
+                                <p>Learning computer applications and internet safety</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Ballet - All under ACTIVITIES category -->
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Ballet.jpg" alt="Ballet Class"
+                             onerror="this.src='https://images.unsplash.com/photo-1546776310-eef45dd6d63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Ballet Practice</h4>
+                                <p>Students practicing ballet techniques</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-33">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/Ballet2.jpg" alt="Ballet club"
+                             onerror="this.src='https://images.unsplash.com/photo-1518834107812-67b0b7c58434?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                        <div class="gallery-overlay">
+                            <div>
+                                <h4>Ballet club</h4>
+                                <p>Annual dance recital showcase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More gallery items will be added by JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="width-100 text-center margin-top-50">
+                <button id="load-more" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Load More Photos
+                </button>
+            </div>
+
+            <!-- Video Gallery -->
+            <div class="width-100 video-gallery">
+                <div class="section-title">
+                    <h2>Video Gallery</h2>
+                    <p>Watch our school in action</p>
+                </div>
+
+                <div class="width-50">
+                    <div class="video-item">
+                        <div class="video-container">
+                            <iframe src=
+                                    title="School Tour"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="card-body">
+                            <h3>Virtual School Tour</h3>
+                            <p>Take a guided tour of our Montessori classrooms and facilities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="width-50">
+                    <div class="video-item">
+                        <div class="video-container">
+                            <iframe src=
+                                    title="Annual Day"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="card-body">
+                            <h3>Annual Day Performance</h3>
+                            <p>Highlights from our annual cultural program</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modal-image" src="" alt="">
+            <div id="modal-caption" class="modal-caption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="width-100 footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Gallery Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-images"></i> 500+ Photos</li>
+                        <li><i class="fas fa-video"></i> 50+ Videos</li>
+                        <li><i class="fas fa-calendar"></i> Updated Weekly</li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="/about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="/academics"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                        <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Share Your Photos</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:photos@hephzibah.edu"><i class="fas fa-envelope"></i> Submit Photos</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook Album</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Hephzibah Vics Montessori. All photos are property of the school.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Filter gallery items
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.parentElement.style.display = 'block';
+                        } else {
+                            item.parentElement.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Lightbox functionality
+            const modal = document.getElementById('lightbox-modal');
+            const modalImg = document.getElementById('modal-image');
+            const modalCaption = document.getElementById('modal-caption');
+            const closeModal = document.querySelector('.close-modal');
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    const title = this.querySelector('h4').textContent;
+                    const description = this.querySelector('p').textContent;
+
+                    modal.style.display = 'flex';
+                    modalImg.src = img.src;
+                    modalCaption.innerHTML = `<h4>${title}</h4><p>${description}</p>`;
+                });
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Load more functionality
+            let currentPage = 1;
+            const loadMoreBtn = document.getElementById('load-more');
+            const galleryContainer = document.getElementById('photo-gallery');
+
+            const galleryImages = [
+                { category: 'events', src: 'images/gallery/event1.jpg', title: 'Sports Day', desc: 'Annual sports day competition' },
+                { category: 'sports', src: 'images/gallery/sports1.jpg', title: 'Swimming Class', desc: 'Children learning swimming' },
+                { category: 'graduation', src: 'images/gallery/graduation1.jpg', title: 'Graduation Ceremony', desc: 'Class of 2024 graduation' },
+                { category: 'campus', src: 'images/gallery/campus2.jpg', title: 'Playground', desc: 'Outdoor play area' },
+                { category: 'classroom', src: 'images/gallery/classroom2.jpg', title: 'Science Lab', desc: 'Hands-on science experiments' },
+                { category: 'activities', src: 'images/gallery/activity2.jpg', title: 'Music Class', desc: 'Children learning music' },
+                // New activities (all under 'activities' category)
+                { category: 'activities', src: 'images/ROBOTICS3.jpg', title: 'Robotics Advanced', desc: 'Advanced robotics programming' },
+                { category: 'activities', src: 'images/CODING3.jpg', title: 'Coding Workshop', desc: 'Python programming for kids' },
+                { category: 'activities', src: 'images/HOME3.jpg', title: 'Baking Class', desc: 'Learning to bake cookies' },
+                { category: 'activities', src: 'images/ICT3.jpg', title: 'Graphic Design', desc: 'Creating digital art' },
+                { category: 'activities', src: 'images/BALLET3.jpg', title: 'Ballet Recital', desc: 'End of year performance' }
+            ];
+
+            loadMoreBtn.addEventListener('click', function() {
+                const startIndex = (currentPage - 1) * 6;
+                const endIndex = startIndex + 6;
+
+                for (let i = startIndex; i < Math.min(endIndex, galleryImages.length); i++) {
+                    const image = galleryImages[i];
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'width-33';
+                    galleryItem.innerHTML = `
+                        <div class="gallery-item" data-category="${image.category}">
+                            <img src="${image.src}" alt="${image.title}"
+                                 onerror="this.src='https://images.unsplash.com/photo-${i+1}?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                            <div class="gallery-overlay">
+                                <div>
+                                    <h4>${image.title}</h4>
+                                    <p>${image.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(galleryItem);
+
+                    // Add click event to new items
+                    const newItem = galleryItem.querySelector('.gallery-item');
+                    newItem.addEventListener('click', function() {
+                        const img = this.querySelector('img');
+                        const title = this.querySelector('h4').textContent;
+                        const description = this.querySelector('p').textContent;
+
+                        modal.style.display = 'flex';
+                        modalImg.src = img.src;
+                        modalCaption.innerHTML = `<h4>${title}</h4><p>${description}</p>`;
+                    });
+                }
+
+                currentPage++;
+
+                // Hide button if no more images
+                if (currentPage * 6 >= galleryImages.length) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

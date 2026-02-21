@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academics - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .program-card {
+            transition: transform 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .age-badge {
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .curriculum-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .curriculum-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .curriculum-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .timetable {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <img src="images/hephzibah.png" alt="School Logo" height="60">
+        </a>
+    </div>
+</header>
+
+<!-- Top Header -->
+<div class="width-100 top-header">
+    <div class="container">
+        <div class="width-100">
+            <b class="new-list"><i class="fas fa-bullhorn"></i> NEWS :</b>
+            <marquee class="headquote" id="header-news">
+                Admissions Open for Academic Year 2025-2026 | Limited Seats Available
+            </marquee>
+        </div>
+    </div>
+</div>
+
+<!-- Main Navigation -->
+<div class="width-100 header-menu">
+    <div class="container">
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+        </div>
+
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="main-menu" id="main-menu">
+            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="/academics" class="active"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+            <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+            <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+            <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+            <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<!-- Page Header -->
+<div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/academics-bg.jpg'); min-height: 300px; padding: 80px 0;">
+    <div class="container">
+        <h1>Academic Programs</h1>
+        <p>Comprehensive Montessori education from Toddler to Elementary levels</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="width-100 padding-50">
+    <div class="container">
+        <!-- Program Overview -->
+        <div class="width-100 margin-bottom-50">
+            <div class="section-title">
+                <h2>Our Academic Programs</h2>
+                <p>Age-appropriate Montessori curriculum designed for holistic development</p>
+            </div>
+        </div>
+
+        <!-- Programs Grid -->
+        <div class="width-100 margin-bottom-50">
+            <!-- Toddler Program -->
+            <div class="width-33">
+                <div class="card program-card">
+                    <div class="card-body">
+                        <span class="age-badge">1.5 - 3 Years</span>
+                        <h3 class="card-title">Toddler Community</h3>
+                        <p class="card-text">Our youngest learners develop independence, language skills, and social awareness in a safe, nurturing environment.</p>
+
+                        <h4 style="margin-top: 20px; color: var(--primary);">Key Focus Areas:</h4>
+                        <ul class="curriculum-list">
+                            <li>Practical Life Activities</li>
+                            <li>Sensorial Development</li>
+                            <li>Language Acquisition</li>
+                            <li>Social Skills Development</li>
+                            <li>Fine Motor Skills</li>
+                        </ul>
+
+                        <div style="margin-top: 20px;">
+                            <a href="#toddler-details" class="btn btn-primary btn-sm">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nursery Program -->
+            <div class="width-33">
+                <div class="card program-card">
+                    <div class="card-body">
+                        <span class="age-badge">3 - 6 Years</span>
+                        <h3 class="card-title">Nursery Program</h3>
+                        <p class="card-text">Children explore the five Montessori curriculum areas: Practical Life, Sensorial, Language, Mathematics, and Cultural Studies.</p>
+
+                        <h4 style="margin-top: 20px; color: var(--primary);">Curriculum Areas:</h4>
+                        <ul class="curriculum-list">
+                            <li>Mathematics & Numbers</li>
+                            <li>Language & Reading</li>
+                            <li>Cultural Studies</li>
+                            <li>Science Exploration</li>
+                            <li>Coding and Abacus</li>
+                        </ul>
+
+                        <div style="margin-top: 20px;">
+                            <a href="#primary-details" class="btn btn-primary btn-sm">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary/Secondary Program -->
+            <div class="width-33">
+                <div class="card program-card">
+                    <div class="card-body">
+                        <span class="age-badge">6 - 14 Years</span>
+                        <h3 class="card-title">Primary/Secondary Program</h3>
+                        <p class="card-text">Older children engage in cosmic education, exploring the interconnectedness of all knowledge through research and projects.</p>
+
+                        <h4 style="margin-top: 20px; color: var(--primary);">Key Features:</h4>
+                        <ul class="curriculum-list">
+                            <li>Cosmic Education</li>
+                            <li>Research Projects</li>
+                            <li>Advanced Mathematics</li>
+                            <li>Science Experiments</li>
+                            <li>Coding and Machine Learning</li>
+                        </ul>
+
+                        <div style="margin-top: 20px;">
+                            <a href="#elementary-details" class="btn btn-primary btn-sm">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- Detailed Program Information -->
+        <div class="width-100 margin-bottom-50">
+            <div class="section-title">
+                <h2>Curriculum Details</h2>
+                <p>Comprehensive learning experiences across all age groups</p>
+            </div>
+
+            <div class="width-100">
+                <!-- Toddler Program Details -->
+                <div class="timetable">
+                    <h3 id="toddler-details">Toddler Community (1.5 - 3 Years)</h3>
+                    <p>The Toddler program focuses on developing independence, language skills, and social awareness. Our prepared environment allows toddlers to explore safely while developing coordination and concentration.</p>
+
+                    <div class="width-50">
+                        <h4>Daily Schedule:</h4>
+                        <table class="table" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">7:00 - 8:00 AM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Arrival & Free Play</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">8:30 - 9:30 AM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Practical Life Activities</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">9:30 - 10:00 AM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Circle Time</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">10:00 - 10:30 AM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Snack Time</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">10:30 - 11:30 AM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Outdoor Play</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">11:30 AM - 1:00 PM</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Story Time & Departure</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="width-50">
+                        <h4>Learning Objectives:</h4>
+                        <ul class="curriculum-list">
+                            <li>Develop independence and self-care skills</li>
+                            <li>Build vocabulary and communication skills</li>
+                            <li>Enhance fine and gross motor skills</li>
+                            <li>Learn social skills and cooperation</li>
+                            <li>Develop concentration and order</li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!-- Nursery Program Details -->
+                <div class="timetable" style="margin-top: 30px;">
+                    <h3 id="primary-details">Nursery Program (3 - 6 Years)</h3>
+                    <p>The Nursery program offers a complete Montessori curriculum with five key areas of learning. Children work individually and in small groups, developing at their own pace.</p>
+
+                    <div class="width-50">
+                        <h4>Curriculum Areas:</h4>
+                        <ul class="curriculum-list">
+                            <li><strong>Practical Life:</strong> Care of self and environment</li>
+                            <li><strong>Sensorial:</strong> Refinement of the senses</li>
+                            <li><strong>Language:</strong> Reading, writing, and communication</li>
+                            <li><strong>Mathematics:</strong> Concrete to abstract concepts</li>
+                            <li><strong>Cultural Studies:</strong> History, Geography, science, art, music</li>
+                        </ul>
+                    </div>
+
+                    <div class="width-50">
+                        <h4>Assessment:</h4>
+                        <ul class="curriculum-list">
+                            <li>Continuous observation-based assessment</li>
+                            <li>Individual progress tracking</li>
+                            <li>Bi-Weekly Test</li>
+                            <li>Portfolio of student work</li>
+                            <li>Development milestone tracking</li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!-- Primary/Secondary Program Details -->
+                <div class="timetable" style="margin-top: 30px;">
+                    <h3 id="elementary-details">Primary/Secondary Program (6 - 14 Years)</h3>
+                    <p>The Primary/Secondary program follows the Montessori cosmic education approach, helping children understand the interconnectedness of all knowledge. Students engage in deep research, collaborative projects, and advanced academic work.</p>
+
+                    <div class="width-50">
+                        <h4>Core Subjects:</h4>
+                        <ul class="curriculum-list">
+                            <li><strong>Mathematics:</strong> Algebra, Geometry, Problem-solving</li>
+                            <li><strong>English Studies:</strong> Literature, Grammar, Composition</li>
+                            <li><strong>Basic Science:</strong> Biology, Chemistry, Physics</li>
+                            <li><strong>Basic Technology:</strong> Design, Workshop skills</li>
+                            <li><strong>ICT:</strong> Computer science, Digital literacy</li>
+                            <li><strong>Agricultural Science:</strong> Farming, Crop production</li>
+                            <li><strong>Social Studies:</strong> History, Geography, Civic Education</li>
+                            <li><strong>CRS:</strong> Moral and religious education</li>
+                            <li><strong>PHE:</strong> Physical and health education</li>
+                            <li><strong>Business Studies:</strong> Entrepreneurship, Commerce</li>
+                            <li><strong>Home Economics:</strong> Food and nutrition, Sewing</li>
+                            <li><strong>French:</strong> Foreign language learning</li>
+                            <li><strong>Music & Fine Arts:</strong> Creative expression</li>
+                            <li><strong>Coding & Robotics:</strong> Programming, AI, Machine Learning</li>
+                        </ul>
+                    </div>
+
+                    <div class="width-50">
+                        <h4>Assessment Methods:</h4>
+                        <ul class="curriculum-list">
+                            <li>Continuous assessment throughout term</li>
+                            <li>Project-based evaluations</li>
+                            <li>Mid-term tests and examinations</li>
+                            <li>Research presentations</li>
+                            <li>Portfolio reviews</li>
+                            <li>Standardized assessments</li>
+                        </ul>
+
+                        <h4 style="margin-top: 20px;">Term Structure:</h4>
+                        <ul class="curriculum-list">
+                            <li><strong>Term 1:</strong> September - December</li>
+                            <li><strong>Term 2:</strong> January - April</li>
+                            <li><strong>Term 3:</strong> May - August</li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: #e8f4fc; border-radius: 8px;">
+                        <h4>Learning Approach:</h4>
+                        <p>Our Primary/Secondary program combines Montessori principles with the Nigerian national curriculum. Students learn through:</p>
+                        <ul class="curriculum-list">
+                            <li>Hands-on experiments and investigations</li>
+                            <li>Collaborative group projects</li>
+                            <li>Individual research and presentations</li>
+                            <li>Field trips and community engagement</li>
+                            <li>Technology-integrated learning</li>
+                            <li>Leadership and mentorship opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extracurricular Activities -->
+        <div class="width-100">
+            <div class="section-title">
+                <h2>Extracurricular Programs</h2>
+                <p>Beyond the classroom: Enrichment activities for all-round development</p>
+            </div>
+
+            <div class="width-25">
+                <div class="card" style="text-align: center; height: 100%;">
+                    <div class="card-body">
+                        <i class="fas fa-music" style="font-size: 40px; color: #3498db; margin-bottom: 15px;"></i>
+                        <h4>Music & Dance</h4>
+                        <p>Vocal training, instrument lessons, and dance classes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="width-25">
+                <div class="card" style="text-align: center; height: 100%;">
+                    <div class="card-body">
+                        <i class="fas fa-paint-brush" style="font-size: 40px; color: #2ecc71; margin-bottom: 15px;"></i>
+                        <h4>Arts & Crafts</h4>
+                        <p>Painting, pottery, drawing, and creative expression</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="width-25">
+                <div class="card" style="text-align: center; height: 100%;">
+                    <div class="card-body">
+                        <i class="fas fa-futbol" style="font-size: 40px; color: #e74c3c; margin-bottom: 15px;"></i>
+                        <h4>Sports</h4>
+                        <p>Soccer, Basketball, gymnastics, and indoor games</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="width-25">
+                <div class="card" style="text-align: center; height: 100%;">
+                    <div class="card-body">
+                        <i class="fas fa-robot" style="font-size: 40px; color: #f39c12; margin-bottom: 15px;"></i>
+                        <h4>STEM Club</h4>
+                        <p>Robotics, coding, and science experiments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- Facilities -->
+        <div class="width-100 margin-top-50">
+            <div class="section-title">
+                <h2>Learning Facilities</h2>
+                <p>State-of-the-art facilities to support our academic programs</p>
+            </div>
+
+            <div class="width-100">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="width-33" style="text-align: center;">
+                            <i class="fas fa-book-open" style="font-size: 48px; color: #3498db;"></i>
+                            <h4>Montessori Classrooms</h4>
+                            <p>Child-sized furniture and authentic Montessori materials</p>
+                        </div>
+
+                        <div class="width-33" style="text-align: center;">
+                            <i class="fas fa-flask" style="font-size: 48px; color: #2ecc71;"></i>
+                            <h4>Science Lab</h4>
+                            <p>Age-appropriate experiments and discovery-based learning</p>
+                        </div>
+
+                        <div class="width-33" style="text-align: center;">
+                            <i class="fas fa-laptop-code" style="font-size: 48px; color: #e74c3c;"></i>
+                            <h4>Computer Lab</h4>
+                            <p>Technology-integrated learning with educational software</p>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="width-33" style="text-align: center; margin-top: 30px;">
+                            <i class="fas fa-robot" style="font-size: 48px; color: #9b59b6;"></i>
+                            <h4>Coding and Robotics clubs</h4>
+                            <p>Coding and AI Robotics</p>
+                        </div>
+
+                        <div class="width-33" style="text-align: center; margin-top: 30px;">
+                            <i class="fas fa-children" style="font-size: 48px; color: #f39c12;"></i>
+                            <h4>Playground</h4>
+                            <p>All work and no play makes Jack a dull boy</p>
+                        </div>
+
+                        <div class="width-33" style="text-align: center; margin-top: 30px;">
+                            <i class="fas fa-utensils" style="font-size: 48px; color: #1abc9c;"></i>
+                            <h4>Lunch time</h4>
+                            <p>A time for meals</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="width-100 footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="/academics"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                    <li><a href="/admission"><i class="fas fa-chevron-right"></i> Admission</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Admissions</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +234 815 557 1047, +234 808 657 0620, +234 703 122 2500</li>
+                    <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Thu: 9 AM - 2 PM, Fri: 9 AM - 1 PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Hephzibah Vics Montessori. All Rights Reserved.</p>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+    // Load navigation if placeholder exists
+    const navPlaceholder = document.getElementById('nav-placeholder');
+    if (navPlaceholder) {
+        fetch('/includes/nav.html')
+            .then(response => response.text())
+            .then(data => {
+                navPlaceholder.innerHTML = data;
+
+                // Highlight current page in navigation
+                const currentPage = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+            })
+            .catch(error => console.log('Navigation not loaded:', error));
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,2668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Verification - Hephzibah Vics Montessori</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your existing CSS remains exactly the same - I'm not changing any CSS */
+        .admin-container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .admin-header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .admin-header h1 i {
+            margin-right: 15px;
+            color: var(--secondary);
+        }
+
+        .admin-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-badge i {
+            color: var(--secondary);
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .stat-info h3 {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-info .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.pending {
+            background: #fff3cd;
+            color: #f39c12;
+        }
+
+        .stat-icon.verified {
+            background: #d4edda;
+            color: #27ae60;
+        }
+
+        .stat-icon.rejected {
+            background: #f8d7da;
+            color: #e74c3c;
+        }
+
+        .stat-icon.total {
+            background: #e8f4fc;
+            color: #3498db;
+        }
+
+        /* Tab Navigation for Fees/Admission */
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-tab {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .admin-tab:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .admin-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .admin-tab.active.fees {
+            background: #3498db;
+        }
+
+        .admin-tab.active.admission {
+            background: #9b59b6;
+        }
+
+        .admin-tab i {
+            font-size: 18px;
+        }
+
+        /* Section visibility */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+
+        .filter-tab {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--text-light);
+        }
+
+        .filter-tab:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .filter-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .filter-tab.active.pending {
+            background: #f39c12;
+        }
+
+        .filter-tab.active.verified {
+            background: #27ae60;
+        }
+
+        .filter-tab.active.rejected {
+            background: #e74c3c;
+        }
+
+        /* Search Section */
+        .search-section {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .search-group {
+            flex: 1;
+            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .search-group label {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .search-group input,
+        .search-group select {
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .search-group input:focus,
+        .search-group select:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .search-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            height: 45px;
+        }
+
+        .search-btn:hover {
+            background: #2980b9;
+        }
+
+        .reset-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            height: 45px;
+        }
+
+        .reset-btn:hover {
+            background: #7f8c8d;
+        }
+
+        /* Items Container */
+        .items-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .items-header h2 {
+            color: var(--primary);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .export-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .export-btn:hover {
+            background: #229954;
+        }
+
+        /* Item Cards */
+        .item-card {
+            background: white;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .item-card:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--shadow);
+        }
+
+        .item-card.pending {
+            border-left: 5px solid #f39c12;
+        }
+
+        .item-card.verified {
+            border-left: 5px solid #27ae60;
+        }
+
+        .item-card.rejected {
+            border-left: 5px solid #e74c3c;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .applicant-info h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .applicant-info .applicant-id {
+            color: var(--text-light);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #f39c12;
+        }
+
+        .status-badge.verified {
+            background: #d4edda;
+            color: #27ae60;
+        }
+
+        .status-badge.rejected {
+            background: #f8d7da;
+            color: #e74c3c;
+        }
+
+        .item-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-item .label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .detail-item .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .detail-item .value.amount {
+            color: #27ae60;
+            font-size: 18px;
+        }
+
+        .receipt-section {
+            background: var(--light);
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .receipt-section:hover {
+            border-color: var(--secondary);
+            background: #e8f4fc;
+        }
+
+        .receipt-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .receipt-icon.pdf {
+            background: #e74c3c;
+        }
+
+        .receipt-info {
+            flex: 1;
+        }
+
+        .receipt-info .filename {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .receipt-info .filesize {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .receipt-info .upload-date {
+            font-size: 11px;
+            color: #95a5a6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-verify {
+            flex: 2;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-verify:hover {
+            background: #229954;
+        }
+
+        .btn-reject {
+            flex: 1;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-reject:hover {
+            background: #c0392b;
+        }
+
+        .btn-view {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-view:hover {
+            background: #2980b9;
+        }
+
+        /* Reject Section */
+        .reject-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fef9e7;
+            border-radius: 8px;
+            border: 1px solid #f39c12;
+        }
+
+        .reject-section textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .reject-section textarea:focus {
+            border-color: #f39c12;
+            outline: none;
+        }
+
+        .reject-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-confirm-reject {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Verification History */
+        .verification-history {
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .verification-history i {
+            color: #27ae60;
+            margin-right: 5px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 2px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .receipt-viewer {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            border: 2px dashed #bdc3c7;
+        }
+
+        .receipt-viewer i {
+            font-size: 80px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .loading-spinner i {
+            font-size: 40px;
+            color: var(--secondary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .no-results i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        .no-results h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .search-section {
+                flex-direction: column;
+            }
+
+            .search-group {
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-verify, .btn-reject {
+                width: 100%;
+            }
+
+            .item-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* All Verified Items Section */
+        .verified-items-section {
+            margin-top: 40px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .verified-items-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .verified-items-section h2 i {
+            color: #27ae60;
+        }
+
+        .verified-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .verified-table th {
+            background: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .verified-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .verified-table tr:hover {
+            background: var(--light);
+        }
+
+        .verified-badge {
+            background: #d4edda;
+            color: #27ae60;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Application specific styles */
+        .parent-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #bdc3c7;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .program-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #e8f4fc;
+            color: #3498db;
+            margin-left: 5px;
+        }
+
+        .age-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #f0f0f0;
+            color: #7f8c8d;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <img src="images/hephzibah.png" alt="School Logo" height="60">
+            </a>
+        </div>
+
+        <!-- Top Header -->
+        <div class="width-100 top-header">
+            <div class="container">
+                <div class="width-100">
+                    <b class="new-list"><i class="fas fa-shield-alt"></i> ADMIN PORTAL :</b>
+                    <marquee class="headquote">
+                        Payment Verification Panel - Authorized Personnel Only
+                    </marquee>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="width-100 header-menu">
+            <div class="container">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.png" alt="Hephzibah Vics Montessori"></a>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <ul class="main-menu" id="main-menu">
+                    <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="/academics"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                    <li><a href="/admission"><i class="fas fa-user-plus"></i> Admission</a></li>
+                    <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+                    <li><a href="/portal"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+                    <li><a href="/teacher-login"><i class="fas fa-chalkboard-teacher"></i> Teacher</a></li>
+                    <li><a href="/admin-verification" class="active"><i class="fas fa-shield-alt"></i> Admin</a></li>
+                    <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="width-100 hero" style="background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('images/admin-bg.jpg'); min-height: 200px; padding: 60px 0;">
+            <div class="container">
+                <h1>Admin Verification Panel</h1>
+                <p>Verify and manage payments and applications</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="width-100 padding-50">
+        <div class="container">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div>
+                    <h1><i class="fas fa-shield-alt"></i> Verification Panel</h1>
+                    <p style="opacity: 0.9; margin-top: 5px;">Manage school fees and admission applications</p>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="admin-badge">
+                        <i class="fas fa-user-cog"></i>
+                        <span id="admin-name">Administrator</span>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="admin-tabs">
+                <button class="admin-tab fees" onclick="switchTab('fees')">
+                    <i class="fas fa-credit-card"></i> School Fees Payments
+                </button>
+                <button class="admin-tab admission" onclick="switchTab('admission')">
+                    <i class="fas fa-user-plus"></i> Admission Applications
+                </button>
+            </div>
+
+            <!-- School Fees Section -->
+            <div id="fees-section" class="section">
+                <!-- Statistics Cards -->
+                <div class="stats-grid" id="fees-stats-container">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-tabs" id="fees-filter-tabs">
+                        <button class="filter-tab active" data-filter="pending" onclick="filterFeesPayments('pending', this)">Pending</button>
+                        <button class="filter-tab" data-filter="verified" onclick="filterFeesPayments('verified', this)">Verified</button>
+                        <button class="filter-tab" data-filter="rejected" onclick="filterFeesPayments('rejected', this)">Rejected</button>
+                        <button class="filter-tab" data-filter="all" onclick="filterFeesPayments('all', this)">All</button>
+                    </div>
+
+                    <div class="search-section">
+                        <div class="search-group">
+                            <label><i class="fas fa-search"></i> Search</label>
+                            <input type="text" id="fees-search-input" placeholder="Search by student name, ID, or reference...">
+                        </div>
+
+                        <div class="search-group">
+                            <label><i class="fas fa-calendar"></i> From Date</label>
+                            <input type="date" id="fees-date-from">
+                        </div>
+
+                        <div class="search-group">
+                            <label><i class="fas fa-calendar"></i> To Date</label>
+                            <input type="date" id="fees-date-to">
+                        </div>
+
+                        <button class="search-btn" onclick="applyFeesFilters()">
+                            <i class="fas fa-filter"></i> Apply
+                        </button>
+
+                        <button class="reset-btn" onclick="resetFeesFilters()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fees Container -->
+                <div class="items-container">
+                    <div class="items-header">
+                        <h2>
+                            <i class="fas fa-credit-card"></i>
+                            <span id="fees-title">Pending Payments</span>
+                        </h2>
+                        <button class="export-btn" onclick="exportFeesToCSV()">
+                            <i class="fas fa-download"></i> Export Report
+                        </button>
+                    </div>
+
+                    <div id="fees-list">
+                        <!-- Populated by JavaScript -->
+                        <div class="loading-spinner" id="fees-loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p style="margin-top: 15px;">Loading payments...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Verified Fees -->
+                <div class="verified-items-section" id="verified-fees-section">
+                    <h2><i class="fas fa-check-circle"></i> All Verified Fee Payments</h2>
+                    <div class="table-responsive">
+                        <table class="verified-table" id="verified-fees-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Reference</th>
+                                    <th>Amount</th>
+                                    <th>Term</th>
+                                    <th>Verified Date</th>
+                                    <th>Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verified-fees-body">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admission Applications Section -->
+            <div id="admission-section" class="section">
+                <!-- Statistics Cards -->
+                <div class="stats-grid" id="admission-stats-container">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-tabs" id="admission-filter-tabs">
+                        <button class="filter-tab active" data-filter="pending" onclick="filterAdmissionApps('pending', this)">Pending</button>
+                        <button class="filter-tab" data-filter="verified" onclick="filterAdmissionApps('verified', this)">Verified</button>
+                        <button class="filter-tab" data-filter="rejected" onclick="filterAdmissionApps('rejected', this)">Rejected</button>
+                        <button class="filter-tab" data-filter="all" onclick="filterAdmissionApps('all', this)">All</button>
+                    </div>
+
+                    <div class="search-section">
+                        <div class="search-group">
+                            <label><i class="fas fa-search"></i> Search</label>
+                            <input type="text" id="admission-search-input" placeholder="Search by name, ID, or email...">
+                        </div>
+
+                        <div class="search-group">
+                            <label><i class="fas fa-calendar"></i> From Date</label>
+                            <input type="date" id="admission-date-from">
+                        </div>
+
+                        <div class="search-group">
+                            <label><i class="fas fa-calendar"></i> To Date</label>
+                            <input type="date" id="admission-date-to">
+                        </div>
+
+                        <div class="search-group">
+                            <label><i class="fas fa-graduation-cap"></i> Program</label>
+                            <select id="admission-program-filter">
+                                <option value="">All Programs</option>
+                                <option value="toddler">Toddler</option>
+                                <option value="nursery">Nursery</option>
+                                <option value="primary">Primary</option>
+                                <option value="secondary">Secondary</option>
+                            </select>
+                        </div>
+
+                        <button class="search-btn" onclick="applyAdmissionFilters()">
+                            <i class="fas fa-filter"></i> Apply
+                        </button>
+
+                        <button class="reset-btn" onclick="resetAdmissionFilters()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Applications Container -->
+                <div class="items-container">
+                    <div class="items-header">
+                        <h2>
+                            <i class="fas fa-user-plus"></i>
+                            <span id="admission-title">Pending Applications</span>
+                        </h2>
+                        <button class="export-btn" onclick="exportAdmissionToCSV()">
+                            <i class="fas fa-download"></i> Export Applications
+                        </button>
+                    </div>
+
+                    <div id="admission-list">
+                        <!-- Populated by JavaScript -->
+                        <div class="loading-spinner" id="admission-loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p style="margin-top: 15px;">Loading applications...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Verified Applications -->
+                <div class="verified-items-section" id="verified-admission-section">
+                    <h2><i class="fas fa-check-circle"></i> All Verified Applications</h2>
+                    <div class="table-responsive">
+                        <table class="verified-table" id="verified-admission-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Application ID</th>
+                                    <th>Student Name</th>
+                                    <th>Program</th>
+                                    <th>Parent Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Verified Date</th>
+                                    <th>Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verified-admission-body">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="width-100 footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Admin Support</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +234 812 345 6789</li>
+                        <li><i class="fas fa-envelope"></i> hephzibahvics@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 8 AM - 1 PM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="/teacher-login"><i class="fas fa-chevron-right"></i> Teacher Portal</a></li>
+                        <li><a href="/portal"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Security</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-shield-alt"></i> Admin Only</li>
+                        <li><i class="fas fa-lock"></i> Encrypted Data</li>
+                        <li><i class="fas fa-history"></i> Session Timeout: 30min</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Hephzibah Vics Montessori - Admin Verification Panel. All Rights Reserved.</p>
+                <p id="admin-footer-status">Logged in as Administrator</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div id="receipt-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-receipt"></i> Payment Receipt</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Details Modal -->
+    <div id="application-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-alt"></i> Application Details</h2>
+                <button class="modal-close" onclick="closeApplicationModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="application-modal-body">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Details Modal -->
+    <div id="student-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-graduate"></i> Student Details</h2>
+                <button class="modal-close" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="student-modal-body">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CHECK ADMIN SESSION ====================
+        (function() {
+            const isAdmin = sessionStorage.getItem('isAdmin');
+            console.log('Checking admin session:', isAdmin);
+
+            if (!isAdmin || isAdmin !== 'true') {
+                alert('Please login as admin first');
+                window.location.href = 'teacher-login.html';
+            }
+        })();
+
+        // ==================== GLOBAL VARIABLES ====================
+        let allFeesPayments = [];
+        let allAdmissionApps = [];
+        let currentFeesFilter = 'pending';
+        let currentAdmissionFilter = 'pending';
+        let filteredFees = [];
+        let filteredAdmission = [];
+
+        // Student database
+        const students = [
+            { id: 'STU001', name: 'Sarah Johnson', class: 'Grade 1a', parent: 'Mr. Johnson', phone: '+234 812 345 6789' },
+            { id: 'STU002', name: 'Michael Okafor', class: 'Grade 1a', parent: 'Mrs. Okafor', phone: '+234 803 456 7890' },
+            { id: 'STU003', name: 'Amara Eze', class: 'Grade 1a', parent: 'Dr. Eze', phone: '+234 805 678 9012' },
+            { id: 'STU004', name: 'Chidi Okonkwo', class: 'Grade 1b', parent: 'Mr. Okonkwo', phone: '+234 802 345 6789' },
+            { id: 'STU005', name: 'Ngozi Adichie', class: 'Grade 1b', parent: 'Prof. Adichie', phone: '+234 806 789 0123' },
+            { id: 'STU006', name: 'Emma Warrens', class: 'Infant foundation 2', parent: 'Mrs. Warrens', phone: '+234 807 890 1234' },
+            { id: 'STU007', name: 'David Obi', class: 'Buttercup', parent: 'Ms. Obi', phone: '+234 808 901 2345' },
+            { id: 'STU008', name: 'Grace Ajiferuke', class: 'Grade 3', parent: 'Mrs. Ajiferuke', phone: '+234 809 012 3456' },
+            { id: 'STU009', name: 'Blessing Peters', class: 'Grade 2', parent: 'Mrs. Peters', phone: '+234 810 123 4567' },
+            { id: 'STU010', name: 'Victor Adesuwa', class: 'Grade 3', parent: 'Mrs. Adesuwa', phone: '+234 811 234 5678' },
+            { id: 'STU011', name: 'Precious Pere', class: 'Grade 4', parent: 'Mr. Pere', phone: '+234 812 345 6789' },
+            { id: 'STU012', name: 'Daniel Daniels', class: 'Grade 5', parent: 'Mrs. Daniels', phone: '+234 813 456 7890' },
+            { id: 'STU013', name: 'Cynthia Cynthia', class: 'JSS 1', parent: 'Mrs. Cynthia', phone: '+234 814 567 8901' },
+            { id: 'STU014', name: 'John Okon Jr.', class: 'JSS 2', parent: 'Mr. John Okon', phone: '+234 815 678 9012' }
+        ];
+
+        // ==================== TAB SWITCHING ====================
+        function switchTab(tab) {
+            console.log('Switching to tab:', tab);
+
+            // Update tab buttons
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked tab
+            if (tab === 'fees') {
+                document.querySelector('.admin-tab.fees').classList.add('active', 'fees');
+                document.getElementById('fees-section').classList.add('active');
+                document.getElementById('admission-section').classList.remove('active');
+                loadFeesPayments();
+            } else {
+                document.querySelector('.admin-tab.admission').classList.add('active', 'admission');
+                document.getElementById('admission-section').classList.add('active');
+                document.getElementById('fees-section').classList.remove('active');
+                loadAdmissionApps();
+            }
+        }
+
+        // ==================== FEES FUNCTIONS ====================
+        function loadFeesPayments() {
+            showFeesLoading();
+
+            // Get payments from localStorage
+            const stored = localStorage.getItem('paymentHistory');
+
+            if (stored) {
+                try {
+                    allFeesPayments = JSON.parse(stored);
+                    console.log('Loaded', allFeesPayments.length, 'fees payments from localStorage');
+                } catch (e) {
+                    console.error('Error parsing fees payments:', e);
+                    allFeesPayments = [];
+                }
+            } else {
+                allFeesPayments = [];
+                console.log('No fees payments found');
+            }
+
+            // Enrich with student data
+            allFeesPayments = allFeesPayments.map(payment => {
+                const student = students.find(s => s.id === payment.studentId) || {
+                    name: payment.studentName || 'Unknown',
+                    class: payment.studentClass || 'Unknown',
+                    parent: 'Unknown',
+                    phone: 'Unknown'
+                };
+
+                return {
+                    ...payment,
+                    studentName: student.name,
+                    studentClass: student.class,
+                    studentParent: student.parent,
+                    studentPhone: student.phone,
+                    formattedDate: new Date(payment.uploadDate).toLocaleString()
+                };
+            });
+
+            // Sort by date (newest first)
+            allFeesPayments.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+
+            updateFeesStats();
+            updateVerifiedFeesTable();
+            filterFeesPayments('pending', document.querySelector('#fees-filter-tabs .filter-tab[data-filter="pending"]'));
+        }
+
+        function showFeesLoading() {
+            document.getElementById('fees-list').innerHTML = `
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading payments...</p>
+                </div>
+            `;
+        }
+
+        function updateFeesStats() {
+            const pending = allFeesPayments.filter(p => p.status === 'Pending Verification').length;
+            const verified = allFeesPayments.filter(p => p.status === 'Verified').length;
+            const rejected = allFeesPayments.filter(p => p.status === 'Rejected').length;
+            const total = allFeesPayments.length;
+
+            // Calculate total amount verified
+            const totalVerifiedAmount = allFeesPayments
+                .filter(p => p.status === 'Verified')
+                .reduce((sum, p) => {
+                    const amount = parseInt(p.amount.replace(/[^0-9]/g, '')) || 0;
+                    return sum + amount;
+                }, 0);
+
+            document.getElementById('fees-stats-container').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Pending</h3>
+                        <div class="number">${pending}</div>
+                        <small style="color: #7f8c8d;">Awaiting review</small>
+                    </div>
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Verified</h3>
+                        <div class="number">${verified}</div>
+                        <small style="color: #27ae60;">₦${totalVerifiedAmount.toLocaleString()}</small>
+                    </div>
+                    <div class="stat-icon verified">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Rejected</h3>
+                        <div class="number">${rejected}</div>
+                        <small style="color: #e74c3c;">Needs attention</small>
+                    </div>
+                    <div class="stat-icon rejected">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Total</h3>
+                        <div class="number">${total}</div>
+                        <small style="color: #3498db;">All time</small>
+                    </div>
+                    <div class="stat-icon total">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateVerifiedFeesTable() {
+            const verifiedPayments = allFeesPayments.filter(p => p.status === 'Verified');
+            const tbody = document.getElementById('verified-fees-body');
+
+            if (verifiedPayments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 30px; color: #7f8c8d;">
+                            <i class="fas fa-info-circle"></i> No verified payments yet
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Sort by verified date (newest first)
+            verifiedPayments.sort((a, b) => {
+                const dateA = a.verifiedDate ? new Date(a.verifiedDate) : new Date(0);
+                const dateB = b.verifiedDate ? new Date(b.verifiedDate) : new Date(0);
+                return dateB - dateA;
+            });
+
+            tbody.innerHTML = verifiedPayments.map(payment => `
+                <tr>
+                    <td>${new Date(payment.uploadDate).toLocaleDateString()}</td>
+                    <td>${payment.studentId}</td>
+                    <td>
+                        ${payment.studentName}
+                        <button class="btn-view" onclick="viewStudentDetails('${payment.studentId}')" style="margin-left: 5px;">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>${payment.studentClass}</td>
+                    <td>${payment.reference}</td>
+                    <td style="color: #27ae60; font-weight: bold;">${payment.amount}</td>
+                    <td>${payment.term}</td>
+                    <td>${payment.verifiedDate ? new Date(payment.verifiedDate).toLocaleString() : 'N/A'}</td>
+                    <td>
+                        <button class="btn-view" onclick="viewReceipt('${payment.id}', 'fee')">
+                            <i class="fas fa-receipt"></i> View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterFeesPayments(filter, element) {
+            currentFeesFilter = filter;
+
+            // Update active tab
+            document.querySelectorAll('#fees-filter-tabs .filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            if (element) {
+                element.classList.add('active');
+                if (filter === 'pending') element.classList.add('pending');
+                if (filter === 'verified') element.classList.add('verified');
+                if (filter === 'rejected') element.classList.add('rejected');
+            }
+
+            // Update title
+            const titles = {
+                'pending': 'Pending Payments',
+                'verified': 'Verified Payments',
+                'rejected': 'Rejected Payments',
+                'all': 'All Payments'
+            };
+            document.getElementById('fees-title').textContent = titles[filter] || 'Payments';
+
+            applyFeesFilters();
+        }
+
+        function applyFeesFilters() {
+            const searchTerm = document.getElementById('fees-search-input').value.toLowerCase();
+            const dateFrom = document.getElementById('fees-date-from').value;
+            const dateTo = document.getElementById('fees-date-to').value;
+
+            // Apply status filter
+            let filtered = allFeesPayments;
+            if (currentFeesFilter !== 'all') {
+                if (currentFeesFilter === 'pending') {
+                    filtered = filtered.filter(p => p.status === 'Pending Verification');
+                } else if (currentFeesFilter === 'verified') {
+                    filtered = filtered.filter(p => p.status === 'Verified');
+                } else if (currentFeesFilter === 'rejected') {
+                    filtered = filtered.filter(p => p.status === 'Rejected');
+                }
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filtered = filtered.filter(p =>
+                    (p.studentName && p.studentName.toLowerCase().includes(searchTerm)) ||
+                    (p.studentId && p.studentId.toLowerCase().includes(searchTerm)) ||
+                    (p.reference && p.reference.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            // Apply date filters
+            if (dateFrom) {
+                const fromDate = new Date(dateFrom);
+                filtered = filtered.filter(p => new Date(p.uploadDate) >= fromDate);
+            }
+
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                toDate.setHours(23, 59, 59);
+                filtered = filtered.filter(p => new Date(p.uploadDate) <= toDate);
+            }
+
+            filteredFees = filtered;
+            displayFeesPayments();
+        }
+
+        function resetFeesFilters() {
+            document.getElementById('fees-search-input').value = '';
+            document.getElementById('fees-date-from').value = '';
+            document.getElementById('fees-date-to').value = '';
+            filterFeesPayments('pending', document.querySelector('#fees-filter-tabs .filter-tab[data-filter="pending"]'));
+        }
+
+        function displayFeesPayments() {
+            const container = document.getElementById('fees-list');
+
+            if (filteredFees.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No payments found</h3>
+                        <p>There are no ${currentFeesFilter} payments to display</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredFees.map(payment => {
+                // Get the payment data to check if receipt exists
+                const payments = JSON.parse(localStorage.getItem('paymentHistory')) || [];
+                const paymentData = payments.find(p => p.id == payment.id);
+                const hasReceipt = paymentData && paymentData.receiptData;
+
+                return `
+                <div class="item-card ${payment.status === 'Pending Verification' ? 'pending' : payment.status === 'Verified' ? 'verified' : 'rejected'}">
+                    <div class="item-header">
+                        <div class="applicant-info">
+                            <h3>
+                                ${payment.studentName}
+                                <button class="btn-view" onclick="viewStudentDetails('${payment.studentId}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </h3>
+                            <div class="applicant-id">
+                                <i class="fas fa-id-card"></i> ${payment.studentId}
+                                <i class="fas fa-book" style="margin-left: 15px;"></i> ${payment.studentClass}
+                            </div>
+                        </div>
+                        <span class="status-badge ${payment.status === 'Pending Verification' ? 'pending' : payment.status === 'Verified' ? 'verified' : 'rejected'}">
+                            ${payment.status}
+                        </span>
+                    </div>
+
+                    <div class="item-details">
+                        <div class="detail-item">
+                            <span class="label">Reference</span>
+                            <span class="value">${payment.reference}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Amount</span>
+                            <span class="value amount">${payment.amount}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Term</span>
+                            <span class="value">${payment.term}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Upload Date</span>
+                            <span class="value">${new Date(payment.uploadDate).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+
+                    <div class="receipt-section" onclick="viewReceipt('${payment.id}', 'fee')">
+                        <div class="receipt-icon ${payment.fileName && payment.fileName.endsWith('.pdf') ? 'pdf' : ''}">
+                            <i class="fas fa-${hasReceipt ? (payment.fileName && payment.fileName.endsWith('.pdf') ? 'file-pdf' : 'file-image') : 'file'}"></i>
+                        </div>
+                        <div class="receipt-info">
+                            <div class="filename">${payment.fileName || 'receipt.jpg'}</div>
+                            <div class="upload-date">
+                                <i class="fas fa-${hasReceipt ? 'check-circle' : 'exclamation-circle'}"
+                                   style="color: ${hasReceipt ? '#27ae60' : '#f39c12'};"></i>
+                                ${hasReceipt ? 'Receipt uploaded' : 'No image'}
+                            </div>
+                        </div>
+                        <i class="fas fa-external-link-alt" style="color: var(--secondary);"></i>
+                    </div>
+
+                    ${payment.status === 'Verified' ? `
+                        <div class="verification-history">
+                            <i class="fas fa-check-circle"></i>
+                            Verified on ${payment.verifiedDate ? new Date(payment.verifiedDate).toLocaleString() : new Date().toLocaleString()}
+                        </div>
+                    ` : payment.status === 'Rejected' ? `
+                        <div class="verification-history" style="color: #e74c3c;">
+                            <i class="fas fa-times-circle"></i>
+                            Rejected on ${payment.rejectedDate ? new Date(payment.rejectedDate).toLocaleString() : new Date().toLocaleString()}
+                            ${payment.rejectionReason ? `<br><small>Reason: ${payment.rejectionReason}</small>` : ''}
+                        </div>
+                    ` : `
+                        <div class="action-buttons">
+                            <button class="btn-verify" onclick="verifyFeesPayment(${payment.id})">
+                                <i class="fas fa-check-circle"></i> Verify Payment
+                            </button>
+                            <button class="btn-reject" onclick="showFeesRejectReason(${payment.id})">
+                                <i class="fas fa-times-circle"></i> Reject
+                            </button>
+                        </div>
+
+                        <div id="fees-reject-${payment.id}" class="reject-section" style="display: none;">
+                            <textarea id="fees-reason-${payment.id}" placeholder="Enter reason for rejection (optional)" rows="2"></textarea>
+                            <div class="reject-actions">
+                                <button class="btn-confirm-reject" onclick="confirmFeesReject(${payment.id})">
+                                    <i class="fas fa-check"></i> Confirm Reject
+                                </button>
+                                <button class="btn-cancel" onclick="cancelFeesReject(${payment.id})">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    `}
+                </div>
+            `}).join('');
+        }
+
+        function verifyFeesPayment(paymentId) {
+            if (!confirm('Are you sure you want to verify this payment?')) return;
+
+            const payments = JSON.parse(localStorage.getItem('paymentHistory')) || [];
+            const paymentIndex = payments.findIndex(p => p.id == paymentId);
+
+            if (paymentIndex !== -1) {
+                payments[paymentIndex].status = 'Verified';
+                payments[paymentIndex].verifiedDate = new Date().toISOString();
+
+                localStorage.setItem('paymentHistory', JSON.stringify(payments));
+
+                alert('✅ Payment verified successfully!');
+                loadFeesPayments();
+            }
+        }
+
+        function showFeesRejectReason(paymentId) {
+            document.getElementById(`fees-reject-${paymentId}`).style.display = 'block';
+        }
+
+        function cancelFeesReject(paymentId) {
+            document.getElementById(`fees-reject-${paymentId}`).style.display = 'none';
+            document.getElementById(`fees-reason-${paymentId}`).value = '';
+        }
+
+        function confirmFeesReject(paymentId) {
+            const reason = document.getElementById(`fees-reason-${paymentId}`).value.trim();
+
+            if (!confirm('Reject this payment?')) return;
+
+            const payments = JSON.parse(localStorage.getItem('paymentHistory')) || [];
+            const paymentIndex = payments.findIndex(p => p.id == paymentId);
+
+            if (paymentIndex !== -1) {
+                payments[paymentIndex].status = 'Rejected';
+                payments[paymentIndex].rejectedDate = new Date().toISOString();
+                payments[paymentIndex].rejectionReason = reason || 'No reason provided';
+
+                localStorage.setItem('paymentHistory', JSON.stringify(payments));
+
+                alert('❌ Payment rejected');
+                loadFeesPayments();
+            }
+        }
+
+        function exportFeesToCSV() {
+            if (filteredFees.length === 0) {
+                alert('No payments to export');
+                return;
+            }
+
+            const headers = ['Date', 'Student ID', 'Student Name', 'Class', 'Reference', 'Amount', 'Term', 'Status'];
+            const rows = filteredFees.map(p => [
+                new Date(p.uploadDate).toLocaleDateString(),
+                p.studentId,
+                p.studentName,
+                p.studentClass,
+                p.reference,
+                p.amount,
+                p.term,
+                p.status
+            ]);
+
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `fees_payments_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            alert('✅ Report exported successfully!');
+        }
+
+        // ==================== ADMISSION FUNCTIONS ====================
+        function loadAdmissionApps() {
+            console.log('Loading admission applications...');
+            showAdmissionLoading();
+
+            // Get applications from localStorage
+            const stored = localStorage.getItem('admissionApplications');
+
+            if (stored) {
+                try {
+                    allAdmissionApps = JSON.parse(stored);
+                    console.log('Loaded', allAdmissionApps.length, 'admission applications from localStorage');
+
+                    // Log the first application to see its structure
+                    if (allAdmissionApps.length > 0) {
+                        console.log('Sample application structure:', allAdmissionApps[0]);
+                    }
+                } catch (e) {
+                    console.error('Error parsing admission applications:', e);
+                    allAdmissionApps = [];
+                }
+            } else {
+                // Create sample data for testing if no applications exist
+                console.log('No admission applications found, creating sample data...');
+                const sampleApps = [
+                    {
+                        id: 'ADM-2026-001',
+                        first_name: 'John',
+                        last_name: 'Doe',
+                        student_name: 'John Doe',
+                        dob: '2018-05-15',
+                        gender: 'male',
+                        program: 'nursery',
+                        academic_year: '2026-2027',
+                        father_name: 'Mr. John Doe Sr.',
+                        mother_name: 'Mrs. Jane Doe',
+                        email: 'john.doe@example.com',
+                        phone: '+234 812 345 6789',
+                        address: '12 Test Street, Benin City',
+                        referral_source: 'website',
+                        comments: 'Test application',
+                        status: 'Pending Verification',
+                        fileName: 'sample-receipt.jpg',
+                        uploadDate: new Date().toISOString(),
+                        receiptData: null,
+                        type: 'admission'
+                    },
+                    {
+                        id: 'ADM-2026-002',
+                        first_name: 'Sarah',
+                        last_name: 'Johnson',
+                        student_name: 'Sarah Johnson',
+                        dob: '2019-03-10',
+                        gender: 'female',
+                        program: 'toddler',
+                        academic_year: '2026-2027',
+                        father_name: 'Mr. Johnson',
+                        mother_name: 'Mrs. Johnson',
+                        email: 'sarah.j@example.com',
+                        phone: '+234 803 456 7890',
+                        address: '45 Peace Avenue, Benin City',
+                        referral_source: 'friend',
+                        comments: 'Interested in Montessori method',
+                        status: 'Verified',
+                        fileName: 'sarah-receipt.pdf',
+                        uploadDate: new Date(Date.now() - 86400000).toISOString(),
+                        verifiedDate: new Date().toISOString(),
+                        receiptData: null,
+                        type: 'admission'
+                    }
+                ];
+                allAdmissionApps = sampleApps;
+                localStorage.setItem('admissionApplications', JSON.stringify(sampleApps));
+                console.log('Added sample admission applications for testing');
+            }
+
+            // Sort by date (newest first)
+            allAdmissionApps.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+
+            updateAdmissionStats();
+            updateVerifiedAdmissionTable();
+
+            // Get the pending tab element and trigger filter
+            const pendingTab = document.querySelector('#admission-filter-tabs .filter-tab[data-filter="pending"]');
+            filterAdmissionApps('pending', pendingTab);
+        }
+
+        function showAdmissionLoading() {
+            const container = document.getElementById('admission-list');
+            if (container) {
+                container.innerHTML = `
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading applications...</p>
+                    </div>
+                `;
+            }
+        }
+
+        function updateAdmissionStats() {
+            const pending = allAdmissionApps.filter(a => a.status === 'Pending Verification').length;
+            const verified = allAdmissionApps.filter(a => a.status === 'Verified').length;
+            const rejected = allAdmissionApps.filter(a => a.status === 'Rejected').length;
+            const total = allAdmissionApps.length;
+
+            const container = document.getElementById('admission-stats-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Pending</h3>
+                            <div class="number">${pending}</div>
+                            <small style="color: #7f8c8d;">Awaiting review</small>
+                        </div>
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Verified</h3>
+                            <div class="number">${verified}</div>
+                            <small style="color: #27ae60;">Applications approved</small>
+                        </div>
+                        <div class="stat-icon verified">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Rejected</h3>
+                            <div class="number">${rejected}</div>
+                            <small style="color: #e74c3c;">Needs attention</small>
+                        </div>
+                        <div class="stat-icon rejected">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Total</h3>
+                            <div class="number">${total}</div>
+                            <small style="color: #3498db;">All applications</small>
+                        </div>
+                        <div class="stat-icon total">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateVerifiedAdmissionTable() {
+            const verifiedApps = allAdmissionApps.filter(a => a.status === 'Verified');
+            const tbody = document.getElementById('verified-admission-body');
+
+            if (!tbody) return;
+
+            if (verifiedApps.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 30px; color: #7f8c8d;">
+                            <i class="fas fa-info-circle"></i> No verified applications yet
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Sort by verified date (newest first)
+            verifiedApps.sort((a, b) => {
+                const dateA = a.verifiedDate ? new Date(a.verifiedDate) : new Date(0);
+                const dateB = b.verifiedDate ? new Date(b.verifiedDate) : new Date(0);
+                return dateB - dateA;
+            });
+
+            tbody.innerHTML = verifiedApps.map(app => {
+                const programDisplay = {
+                    'toddler': 'Toddler',
+                    'nursery': 'Nursery',
+                    'primary': 'Primary',
+                    'secondary': 'Secondary'
+                }[app.program] || app.program;
+
+                const studentName = app.student_name || `${app.first_name || ''} ${app.last_name || ''}`.trim() || 'Unknown';
+                const parentName = app.father_name || app.mother_name || 'N/A';
+
+                return `
+                <tr>
+                    <td>${new Date(app.uploadDate).toLocaleDateString()}</td>
+                    <td>${app.id}</td>
+                    <td>
+                        ${studentName}
+                        <button class="btn-view" onclick="viewApplicationDetails('${app.id}')" style="margin-left: 5px;">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>${programDisplay}</td>
+                    <td>${parentName}</td>
+                    <td>${app.email || 'N/A'}</td>
+                    <td>${app.phone || 'N/A'}</td>
+                    <td>${app.verifiedDate ? new Date(app.verifiedDate).toLocaleString() : 'N/A'}</td>
+                    <td>
+                        <button class="btn-view" onclick="viewReceipt('${app.id}', 'admission')">
+                            <i class="fas fa-receipt"></i> View
+                        </button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function filterAdmissionApps(filter, element) {
+            console.log('Filtering admission apps:', filter);
+            currentAdmissionFilter = filter;
+
+            // Update active tab
+            document.querySelectorAll('#admission-filter-tabs .filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            if (element) {
+                element.classList.add('active');
+                if (filter === 'pending') element.classList.add('pending');
+                if (filter === 'verified') element.classList.add('verified');
+                if (filter === 'rejected') element.classList.add('rejected');
+            }
+
+            // Update title
+            const titles = {
+                'pending': 'Pending Applications',
+                'verified': 'Verified Applications',
+                'rejected': 'Rejected Applications',
+                'all': 'All Applications'
+            };
+            const titleElement = document.getElementById('admission-title');
+            if (titleElement) {
+                titleElement.textContent = titles[filter] || 'Applications';
+            }
+
+            applyAdmissionFilters();
+        }
+
+        function applyAdmissionFilters() {
+            const searchTerm = document.getElementById('admission-search-input')?.value.toLowerCase() || '';
+            const dateFrom = document.getElementById('admission-date-from')?.value || '';
+            const dateTo = document.getElementById('admission-date-to')?.value || '';
+            const programFilter = document.getElementById('admission-program-filter')?.value || '';
+
+            // Apply status filter
+            let filtered = allAdmissionApps;
+            if (currentAdmissionFilter !== 'all') {
+                if (currentAdmissionFilter === 'pending') {
+                    filtered = filtered.filter(a => a.status === 'Pending Verification');
+                } else if (currentAdmissionFilter === 'verified') {
+                    filtered = filtered.filter(a => a.status === 'Verified');
+                } else if (currentAdmissionFilter === 'rejected') {
+                    filtered = filtered.filter(a => a.status === 'Rejected');
+                }
+            }
+
+            // Apply program filter
+            if (programFilter) {
+                filtered = filtered.filter(a => a.program === programFilter);
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filtered = filtered.filter(a => {
+                    const studentName = a.student_name || `${a.first_name || ''} ${a.last_name || ''}`;
+                    return (studentName && studentName.toLowerCase().includes(searchTerm)) ||
+                        (a.id && a.id.toLowerCase().includes(searchTerm)) ||
+                        (a.email && a.email.toLowerCase().includes(searchTerm)) ||
+                        (a.father_name && a.father_name.toLowerCase().includes(searchTerm)) ||
+                        (a.mother_name && a.mother_name.toLowerCase().includes(searchTerm));
+                });
+            }
+
+            // Apply date filters
+            if (dateFrom) {
+                const fromDate = new Date(dateFrom);
+                filtered = filtered.filter(a => new Date(a.uploadDate) >= fromDate);
+            }
+
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                toDate.setHours(23, 59, 59);
+                filtered = filtered.filter(a => new Date(a.uploadDate) <= toDate);
+            }
+
+            filteredAdmission = filtered;
+            displayAdmissionApps();
+        }
+
+        function resetAdmissionFilters() {
+            const searchInput = document.getElementById('admission-search-input');
+            const dateFrom = document.getElementById('admission-date-from');
+            const dateTo = document.getElementById('admission-date-to');
+            const programFilter = document.getElementById('admission-program-filter');
+
+            if (searchInput) searchInput.value = '';
+            if (dateFrom) dateFrom.value = '';
+            if (dateTo) dateTo.value = '';
+            if (programFilter) programFilter.value = '';
+
+            const pendingTab = document.querySelector('#admission-filter-tabs .filter-tab[data-filter="pending"]');
+            filterAdmissionApps('pending', pendingTab);
+        }
+
+        function displayAdmissionApps() {
+            const container = document.getElementById('admission-list');
+
+            if (!container) {
+                console.error('Admission list container not found');
+                return;
+            }
+
+            if (filteredAdmission.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No applications found</h3>
+                        <p>There are no ${currentAdmissionFilter} applications to display</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredAdmission.map(app => {
+                // Get the app data to check if receipt exists
+                const apps = JSON.parse(localStorage.getItem('admissionApplications')) || [];
+                const appData = apps.find(a => a.id == app.id);
+                const hasReceipt = appData && appData.receiptData;
+
+                const programDisplay = {
+                    'toddler': 'Toddler',
+                    'nursery': 'Nursery',
+                    'primary': 'Primary',
+                    'secondary': 'Secondary'
+                }[app.program] || app.program;
+
+                const studentName = app.student_name || `${app.first_name || ''} ${app.last_name || ''}`.trim() || 'Unknown';
+
+                // Calculate age from DOB
+                let ageText = '';
+                if (app.dob) {
+                    const dob = new Date(app.dob);
+                    const today = new Date();
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const m = today.getMonth() - dob.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                        age--;
+                    }
+                    ageText = `${age} years`;
+                }
+
+                return `
+                <div class="item-card ${app.status === 'Pending Verification' ? 'pending' : app.status === 'Verified' ? 'verified' : 'rejected'}">
+                    <div class="item-header">
+                        <div class="applicant-info">
+                            <h3>
+                                ${studentName}
+                                <span class="program-badge">${programDisplay}</span>
+                                <button class="btn-view" onclick="viewApplicationDetails('${app.id}')">
+                                    <i class="fas fa-eye"></i> Details
+                                </button>
+                            </h3>
+                            <div class="applicant-id">
+                                <i class="fas fa-id-card"></i> ${app.id}
+                                <i class="fas fa-calendar-alt" style="margin-left: 15px;"></i> DOB: ${new Date(app.dob).toLocaleDateString()}
+                                ${ageText ? `<span class="age-badge">${ageText}</span>` : ''}
+                            </div>
+                        </div>
+                        <span class="status-badge ${app.status === 'Pending Verification' ? 'pending' : app.status === 'Verified' ? 'verified' : 'rejected'}">
+                            ${app.status}
+                        </span>
+                    </div>
+
+                    <div class="item-details">
+                        <div class="detail-item">
+                            <span class="label">Father</span>
+                            <span class="value">${app.father_name || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Mother</span>
+                            <span class="value">${app.mother_name || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Email</span>
+                            <span class="value">${app.email || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Phone</span>
+                            <span class="value">${app.phone || 'N/A'}</span>
+                        </div>
+                    </div>
+
+                    <div class="receipt-section" onclick="viewReceipt('${app.id}', 'admission')">
+                        <div class="receipt-icon ${app.fileName && app.fileName.endsWith('.pdf') ? 'pdf' : ''}">
+                            <i class="fas fa-${hasReceipt ? (app.fileName && app.fileName.endsWith('.pdf') ? 'file-pdf' : 'file-image') : 'file'}"></i>
+                        </div>
+                        <div class="receipt-info">
+                            <div class="filename">${app.fileName || 'receipt.jpg'}</div>
+                            <div class="upload-date">
+                                <i class="fas fa-${hasReceipt ? 'check-circle' : 'exclamation-circle'}"
+                                   style="color: ${hasReceipt ? '#27ae60' : '#f39c12'};"></i>
+                                ${hasReceipt ? 'Receipt uploaded' : 'No image'}
+                            </div>
+                        </div>
+                        <i class="fas fa-external-link-alt" style="color: var(--secondary);"></i>
+                    </div>
+
+                    <div class="parent-info">
+                        <i class="fas fa-map-marker-alt"></i> ${app.address || 'Address not provided'}
+                        ${app.referral_source ? `<br><i class="fas fa-info-circle"></i> Heard from: ${app.referral_source}` : ''}
+                        ${app.comments ? `<br><i class="fas fa-comment"></i> Comments: ${app.comments}` : ''}
+                    </div>
+
+                    ${app.status === 'Verified' ? `
+                        <div class="verification-history">
+                            <i class="fas fa-check-circle"></i>
+                            Verified on ${app.verifiedDate ? new Date(app.verifiedDate).toLocaleString() : new Date().toLocaleString()}
+                        </div>
+                    ` : app.status === 'Rejected' ? `
+                        <div class="verification-history" style="color: #e74c3c;">
+                            <i class="fas fa-times-circle"></i>
+                            Rejected on ${app.rejectedDate ? new Date(app.rejectedDate).toLocaleString() : new Date().toLocaleString()}
+                            ${app.rejectionReason ? `<br><small>Reason: ${app.rejectionReason}</small>` : ''}
+                        </div>
+                    ` : `
+                        <div class="action-buttons">
+                            <button class="btn-verify" onclick="verifyAdmissionApp('${app.id}')">
+                                <i class="fas fa-check-circle"></i> Verify Application
+                            </button>
+                            <button class="btn-reject" onclick="showAdmissionRejectReason('${app.id}')">
+                                <i class="fas fa-times-circle"></i> Reject
+                            </button>
+                        </div>
+
+                        <div id="admission-reject-${app.id}" class="reject-section" style="display: none;">
+                            <textarea id="admission-reason-${app.id}" placeholder="Enter reason for rejection (optional)" rows="2"></textarea>
+                            <div class="reject-actions">
+                                <button class="btn-confirm-reject" onclick="confirmAdmissionReject('${app.id}')">
+                                    <i class="fas fa-check"></i> Confirm Reject
+                                </button>
+                                <button class="btn-cancel" onclick="cancelAdmissionReject('${app.id}')">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    `}
+                </div>
+            `}).join('');
+        }
+
+        function verifyAdmissionApp(appId) {
+            if (!confirm('Are you sure you want to verify this application?')) return;
+
+            const apps = JSON.parse(localStorage.getItem('admissionApplications')) || [];
+            const appIndex = apps.findIndex(a => a.id == appId);
+
+            if (appIndex !== -1) {
+                apps[appIndex].status = 'Verified';
+                apps[appIndex].verifiedDate = new Date().toISOString();
+
+                localStorage.setItem('admissionApplications', JSON.stringify(apps));
+
+                alert('✅ Application verified successfully!');
+                loadAdmissionApps();
+            }
+        }
+
+        function showAdmissionRejectReason(appId) {
+            const rejectDiv = document.getElementById(`admission-reject-${appId}`);
+            if (rejectDiv) {
+                rejectDiv.style.display = 'block';
+            }
+        }
+
+        function cancelAdmissionReject(appId) {
+            const rejectDiv = document.getElementById(`admission-reject-${appId}`);
+            const reasonInput = document.getElementById(`admission-reason-${appId}`);
+            if (rejectDiv) {
+                rejectDiv.style.display = 'none';
+            }
+            if (reasonInput) {
+                reasonInput.value = '';
+            }
+        }
+
+        function confirmAdmissionReject(appId) {
+            const reasonInput = document.getElementById(`admission-reason-${appId}`);
+            const reason = reasonInput ? reasonInput.value.trim() : '';
+
+            if (!confirm('Reject this application?')) return;
+
+            const apps = JSON.parse(localStorage.getItem('admissionApplications')) || [];
+            const appIndex = apps.findIndex(a => a.id == appId);
+
+            if (appIndex !== -1) {
+                apps[appIndex].status = 'Rejected';
+                apps[appIndex].rejectedDate = new Date().toISOString();
+                apps[appIndex].rejectionReason = reason || 'No reason provided';
+
+                localStorage.setItem('admissionApplications', JSON.stringify(apps));
+
+                alert('❌ Application rejected');
+                loadAdmissionApps();
+            }
+        }
+
+        function exportAdmissionToCSV() {
+            if (filteredAdmission.length === 0) {
+                alert('No applications to export');
+                return;
+            }
+
+            const headers = ['Date', 'App ID', 'Student Name', 'Program', 'Father', 'Mother', 'Email', 'Phone', 'Status'];
+            const rows = filteredAdmission.map(a => {
+                const studentName = a.student_name || `${a.first_name || ''} ${a.last_name || ''}`.trim();
+                return [
+                    new Date(a.uploadDate).toLocaleDateString(),
+                    a.id,
+                    studentName,
+                    a.program,
+                    a.father_name || '',
+                    a.mother_name || '',
+                    a.email || '',
+                    a.phone || '',
+                    a.status
+                ];
+            });
+
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `admission_applications_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            alert('✅ Applications exported successfully!');
+        }
+
+        function viewApplicationDetails(appId) {
+            const app = allAdmissionApps.find(a => a.id == appId);
+            if (!app) return;
+
+            const modal = document.getElementById('application-modal');
+            const modalBody = document.getElementById('application-modal-body');
+
+            if (!modal || !modalBody) return;
+
+            const programDisplay = {
+                'toddler': 'Toddler (1.5-3 years)',
+                'nursery': 'Nursery (3-6 years)',
+                'primary': 'Primary (6-11 years)',
+                'secondary': 'Secondary (11-14 years)'
+            }[app.program] || app.program;
+
+            const studentName = app.student_name || `${app.first_name || ''} ${app.last_name || ''}`.trim();
+
+            // Calculate age
+            let ageText = '';
+            if (app.dob) {
+                const dob = new Date(app.dob);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const m = today.getMonth() - dob.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+                ageText = `${age} years`;
+            }
+
+            modalBody.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Application Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px;">
+                        <div>
+                            <strong>Application ID:</strong> ${app.id}<br>
+                            <strong>Status:</strong> <span class="status-badge ${app.status === 'Pending Verification' ? 'pending' : app.status === 'Verified' ? 'verified' : 'rejected'}">${app.status}</span><br>
+                            <strong>Submitted:</strong> ${new Date(app.uploadDate).toLocaleString()}
+                        </div>
+                        <div>
+                            <strong>Program:</strong> ${programDisplay}<br>
+                            <strong>Academic Year:</strong> ${app.academic_year || 'N/A'}<br>
+                            <strong>Referral Source:</strong> ${app.referral_source || 'Not specified'}
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary); margin: 20px 0 15px;">Student Information</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div>
+                        <strong>Full Name:</strong> ${studentName}<br>
+                        <strong>Date of Birth:</strong> ${new Date(app.dob).toLocaleDateString()} ${ageText ? '(' + ageText + ')' : ''}<br>
+                        <strong>Gender:</strong> ${app.gender === 'male' ? 'Male' : app.gender === 'female' ? 'Female' : 'Other'}
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary); margin: 20px 0 15px;">Parent Information</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div>
+                        <strong>Father's Name:</strong> ${app.father_name || 'Not provided'}<br>
+                        <strong>Mother's Name:</strong> ${app.mother_name || 'Not provided'}<br>
+                    </div>
+                    <div>
+                        <strong>Email:</strong> ${app.email || 'Not provided'}<br>
+                        <strong>Phone:</strong> ${app.phone || 'Not provided'}<br>
+                    </div>
+                </div>
+
+                <div style="background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <strong>Address:</strong> ${app.address || 'Not provided'}<br>
+                    ${app.comments ? `<strong>Comments:</strong> ${app.comments}` : ''}
+                </div>
+
+                <div class="receipt-viewer" style="cursor: pointer;" onclick="viewReceipt('${app.id}', 'admission')">
+                    <i class="fas fa-receipt"></i>
+                    <h3>View Receipt</h3>
+                    <p>${app.fileName || 'receipt.jpg'}</p>
+                </div>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeApplicationModal() {
+            const modal = document.getElementById('application-modal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        // ==================== SHARED FUNCTIONS ====================
+        function viewReceipt(itemId, type) {
+            let item;
+            let items;
+
+            if (type === 'fee') {
+                item = allFeesPayments.find(p => p.id == itemId);
+                items = JSON.parse(localStorage.getItem('paymentHistory')) || [];
+            } else {
+                item = allAdmissionApps.find(a => a.id == itemId);
+                items = JSON.parse(localStorage.getItem('admissionApplications')) || [];
+            }
+
+            if (!item) return;
+
+            const modal = document.getElementById('receipt-modal');
+            const modalBody = document.getElementById('modal-body');
+
+            // Get the receipt data from localStorage
+            const itemData = items.find(i => i.id == itemId);
+
+            let receiptHtml = '';
+
+            if (itemData && itemData.receiptData) {
+                // Display the actual uploaded image
+                const fileType = itemData.fileName ? itemData.fileName.split('.').pop().toLowerCase() : '';
+
+                if (fileType === 'pdf') {
+                    receiptHtml = `
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">${type === 'fee' ? 'Payment' : 'Application'} Information</h3>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px;">
+                                <div>
+                                    ${type === 'fee' ? `
+                                        <strong>Student:</strong> ${item.studentName}<br>
+                                        <strong>ID:</strong> ${item.studentId}<br>
+                                        <strong>Class:</strong> ${item.studentClass}
+                                    ` : `
+                                        <strong>Student:</strong> ${item.student_name || item.first_name + ' ' + item.last_name}<br>
+                                        <strong>Application ID:</strong> ${item.id}<br>
+                                        <strong>Program:</strong> ${item.program}
+                                    `}
+                                </div>
+                                <div>
+                                    ${type === 'fee' ? `
+                                        <strong>Reference:</strong> ${item.reference}<br>
+                                        <strong>Amount:</strong> ${item.amount}<br>
+                                        <strong>Term:</strong> ${item.term}
+                                    ` : `
+                                        <strong>Parent:</strong> ${item.father_name || item.mother_name}<br>
+                                        <strong>Email:</strong> ${item.email}<br>
+                                        <strong>Phone:</strong> ${item.phone}
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="receipt-viewer">
+                            <i class="fas fa-file-pdf" style="font-size: 80px; color: #e74c3c; margin-bottom: 20px;"></i>
+                            <h3>${item.fileName || 'receipt.pdf'}</h3>
+                            <p style="margin: 15px 0;">PDF receipts cannot be displayed directly in browser.</p>
+                            <a href="${itemData.receiptData}" download="${item.fileName}"
+                               style="display: inline-block; background: #3498db; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    receiptHtml = `
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">${type === 'fee' ? 'Payment' : 'Application'} Information</h3>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px;">
+                                <div>
+                                    ${type === 'fee' ? `
+                                        <strong>Student:</strong> ${item.studentName}<br>
+                                        <strong>ID:</strong> ${item.studentId}<br>
+                                        <strong>Class:</strong> ${item.studentClass}
+                                    ` : `
+                                        <strong>Student:</strong> ${item.student_name || item.first_name + ' ' + item.last_name}<br>
+                                        <strong>Application ID:</strong> ${item.id}<br>
+                                        <strong>Program:</strong> ${item.program}
+                                    `}
+                                </div>
+                                <div>
+                                    ${type === 'fee' ? `
+                                        <strong>Reference:</strong> ${item.reference}<br>
+                                        <strong>Amount:</strong> ${item.amount}<br>
+                                        <strong>Term:</strong> ${item.term}
+                                    ` : `
+                                        <strong>Parent:</strong> ${item.father_name || item.mother_name}<br>
+                                        <strong>Email:</strong> ${item.email}<br>
+                                        <strong>Phone:</strong> ${item.phone}
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h3>Receipt Image:</h3>
+                            <img src="${itemData.receiptData}" alt="Receipt"
+                                 style="max-width: 100%; max-height: 500px; border: 2px solid #ddd; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                            <p style="margin-top: 10px; color: #7f8c8d;">
+                                <i class="fas fa-info-circle"></i>
+                                File: ${item.fileName || 'receipt.jpg'}
+                            </p>
+                            <a href="${itemData.receiptData}" download="${item.fileName}"
+                               style="display: inline-block; background: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download Image
+                            </a>
+                        </div>
+                    `;
+                }
+            } else {
+                receiptHtml = `
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${type === 'fee' ? 'Payment' : 'Application'} Information</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: var(--light); padding: 15px; border-radius: 8px;">
+                            <div>
+                                ${type === 'fee' ? `
+                                    <strong>Student:</strong> ${item.studentName}<br>
+                                    <strong>ID:</strong> ${item.studentId}<br>
+                                    <strong>Class:</strong> ${item.studentClass}
+                                ` : `
+                                    <strong>Student:</strong> ${item.student_name || item.first_name + ' ' + item.last_name}<br>
+                                    <strong>Application ID:</strong> ${item.id}<br>
+                                    <strong>Program:</strong> ${item.program}
+                                `}
+                            </div>
+                            <div>
+                                ${type === 'fee' ? `
+                                    <strong>Reference:</strong> ${item.reference}<br>
+                                    <strong>Amount:</strong> ${item.amount}<br>
+                                    <strong>Term:</strong> ${item.term}
+                                ` : `
+                                    <strong>Parent:</strong> ${item.father_name || item.mother_name}<br>
+                                    <strong>Email:</strong> ${item.email}<br>
+                                    <strong>Phone:</strong> ${item.phone}
+                                `}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="receipt-viewer">
+                        <i class="fas fa-image" style="font-size: 80px; color: #3498db; margin-bottom: 20px;"></i>
+                        <h3>No Image Available</h3>
+                        <p style="color: #7f8c8d;">This ${type === 'fee' ? 'payment' : 'application'} was submitted without a receipt image.</p>
+                        <p><strong>File:</strong> ${item.fileName || 'receipt.jpg'}</p>
+                    </div>
+                `;
+            }
+
+            modalBody.innerHTML = receiptHtml;
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('receipt-modal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        function viewStudentDetails(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+
+            const studentPayments = allFeesPayments.filter(p => p.studentId === studentId);
+            const totalPaid = studentPayments
+                .filter(p => p.status === 'Verified')
+                .reduce((sum, p) => {
+                    const amount = parseInt(p.amount.replace(/[^0-9]/g, '')) || 0;
+                    return sum + amount;
+                }, 0);
+
+            const modal = document.getElementById('student-modal');
+            const modalBody = document.getElementById('student-modal-body');
+
+            if (!modal || !modalBody) return;
+
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 80px; height: 80px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                        <i class="fas fa-user-graduate" style="font-size: 40px; color: white;"></i>
+                    </div>
+                    <h2 style="color: var(--primary);">${student.name}</h2>
+                    <p style="color: var(--text-light);">${student.id}</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                    <div style="background: var(--light); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--text-light); display: block; margin-bottom: 5px;">Class</strong>
+                        <span style="font-size: 16px;">${student.class}</span>
+                    </div>
+                    <div style="background: var(--light); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--text-light); display: block; margin-bottom: 5px;">Parent</strong>
+                        <span style="font-size: 16px;">${student.parent}</span>
+                    </div>
+                    <div style="background: var(--light); padding: 15px; border-radius: 8px; grid-column: span 2;">
+                        <strong style="color: var(--text-light); display: block; margin-bottom: 5px;">Phone</strong>
+                        <span style="font-size: 16px;">${student.phone}</span>
+                    </div>
+                </div>
+
+                <div style="border-top: 2px solid #ecf0f1; padding-top: 20px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Payment Summary</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                        <div style="text-align: center; background: #d4edda; padding: 10px; border-radius: 5px;">
+                            <strong style="color: #27ae60;">Verified</strong>
+                            <p style="font-size: 20px; font-weight: bold; margin: 5px 0 0;">${studentPayments.filter(p => p.status === 'Verified').length}</p>
+                        </div>
+                        <div style="text-align: center; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                            <strong style="color: #f39c12;">Pending</strong>
+                            <p style="font-size: 20px; font-weight: bold; margin: 5px 0 0;">${studentPayments.filter(p => p.status === 'Pending Verification').length}</p>
+                        </div>
+                        <div style="text-align: center; background: #f8d7da; padding: 10px; border-radius: 5px;">
+                            <strong style="color: #e74c3c;">Rejected</strong>
+                            <p style="font-size: 20px; font-weight: bold; margin: 5px 0 0;">${studentPayments.filter(p => p.status === 'Rejected').length}</p>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 18px; text-align: center;">
+                        <strong>Total Paid:</strong>
+                        <span style="color: #27ae60; font-size: 24px;">₦${totalPaid.toLocaleString()}</span>
+                    </p>
+                </div>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeStudentModal() {
+            const modal = document.getElementById('student-modal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('isAdmin');
+                window.location.href = 'teacher-login.html';
+            }
+        }
+
+        // ==================== INITIALIZE ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing admin panel...');
+
+            // Set fees tab as active by default
+            document.querySelector('.admin-tab.fees').classList.add('active', 'fees');
+            document.getElementById('fees-section').classList.add('active');
+
+            // Load initial data (fees section is active by default)
+            loadFeesPayments();
+
+            // Set default dates (last 30 days) for both sections
+            const today = new Date();
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+            const feesDateTo = document.getElementById('fees-date-to');
+            const feesDateFrom = document.getElementById('fees-date-from');
+            const admissionDateTo = document.getElementById('admission-date-to');
+            const admissionDateFrom = document.getElementById('admission-date-from');
+
+            if (feesDateTo) feesDateTo.value = today.toISOString().split('T')[0];
+            if (feesDateFrom) feesDateFrom.value = thirtyDaysAgo.toISOString().split('T')[0];
+
+            if (admissionDateTo) admissionDateTo.value = today.toISOString().split('T')[0];
+            if (admissionDateFrom) admissionDateFrom.value = thirtyDaysAgo.toISOString().split('T')[0];
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const receiptModal = document.getElementById('receipt-modal');
+            const studentModal = document.getElementById('student-modal');
+            const applicationModal = document.getElementById('application-modal');
+
+            if (event.target === receiptModal) {
+                receiptModal.classList.remove('show');
+            }
+            if (event.target === studentModal) {
+                studentModal.classList.remove('show');
+            }
+            if (event.target === applicationModal) {
+                applicationModal.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
